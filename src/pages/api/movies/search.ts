@@ -8,6 +8,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   if (req.method === 'GET') {
-    res.status(200).json('hello world');
+    if (req.query && req.query.q && typeof req.query.q === 'string') {
+      res.status(200).json(req.query.q);
+      return;
+    }
+
+    res.status(401).json({ message: 'Invalid request.' });
   }
 }
