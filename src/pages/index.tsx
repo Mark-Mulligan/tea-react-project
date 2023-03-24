@@ -1,11 +1,25 @@
+// React
+import { useState, type FormEvent } from 'react';
+
 // Next
 import Head from 'next/head';
 
 // MUI
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 
 export default function Home() {
+  const [searchText, setSearchText] = useState('');
+
+  const handleSearchSubmit = (e: FormEvent) => {
+    e.preventDefault();
+
+    console.log(searchText);
+  };
+
   return (
     <>
       <Head>
@@ -16,9 +30,23 @@ export default function Home() {
       </Head>
       <main>
         <Container>
-          <Typography variant="h1" align="center" sx={{ fontSize: '2.2rem', marginBottom: '1.5rem' }}>
+          <Typography variant="h1" align="center" sx={{ fontSize: '3rem', marginBottom: '1.5rem' }}>
             Search Movies
           </Typography>
+          <Box component="form" sx={{ maxWidth: 500, margin: 'auto' }} onSubmit={handleSearchSubmit}>
+            <TextField
+              required
+              fullWidth
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              label="Search"
+            />
+            <Box sx={{ textAlign: 'right', marginTop: '1rem' }}>
+              <Button variant="contained" type="submit">
+                Search
+              </Button>
+            </Box>
+          </Box>
         </Container>
       </main>
     </>
