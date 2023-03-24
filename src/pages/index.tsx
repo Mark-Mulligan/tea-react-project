@@ -13,16 +13,28 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import CardActionArea from '@mui/material/CardActionArea';
+import CardActions from '@mui/material/CardActions';
+
+// Types
+import { type OMDBSearchResponse, type OMDBMovieSearchData } from '@/customTypes/omdbApi';
 
 export default function Home() {
   const [searchText, setSearchText] = useState('');
+  const [searchResultCount, setSearchResultCount] = useState(0);
+  const [searchResults, setSearchResults] = useState<OMDBMovieSearchData[]>([]);
 
   const handleSearchSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     try {
-      const { data } = await axios.get(`/api/movies/search?q=${searchText}`);
-      console.log(data);
+      const { data } = await axios.get<OMDBSearchResponse>(`/api/movies/search?q=${searchText}`);
+      setSearchResultCount(Number(data.totalResults));
+      setSearchResults(data.Search);
     } catch (err) {
       console.log(err);
     }
@@ -37,7 +49,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Container>
+        <Container sx={{ paddingTop: '2em', paddingBottom: '2rem' }}>
           <Typography variant="h1" align="center" sx={{ fontSize: '3rem', marginBottom: '1.5rem' }}>
             Search Movies
           </Typography>
@@ -49,12 +61,44 @@ export default function Home() {
               onChange={(e) => setSearchText(e.target.value)}
               label="Search"
             />
-            <Box sx={{ textAlign: 'right', marginTop: '1rem' }}>
+            <Box sx={{ textAlign: 'right', marginTop: '1rem', marginBottom: '2rem' }}>
               <Button variant="contained" type="submit">
                 Search
               </Button>
             </Box>
           </Box>
+          {searchResults.length > 0 && (
+            <Grid container spacing={4}>
+              {searchResults.map((result) => {
+                return (
+                  <Grid item md={4} sm={6} xs={12} key={result.imdbID}>
+                    <CardActionArea sx={{ height: '100%' }}>
+                      <Card sx={{ height: '100%' }}>
+                        <CardMedia
+                          component="img"
+                          height="140"
+                          image={result.Poster}
+                          alt={result.Title}
+                          sx={{ backgroundPositon: 'top' }}
+                        />
+                        <CardContent sx={{ marginBottom: '3rem' }}>
+                          <Typography gutterBottom variant="h5" component="div">
+                            {result.Title}
+                          </Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            {result.Type} - {result.Year}
+                          </Typography>
+                          <Button size="small" color="primary" sx={{ marginTop: '1rem' }}>
+                            View Details
+                          </Button>
+                        </CardContent>
+                      </Card>
+                    </CardActionArea>
+                  </Grid>
+                );
+              })}
+            </Grid>
+          )}
         </Container>
       </main>
     </>
