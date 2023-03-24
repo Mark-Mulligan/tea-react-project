@@ -4,6 +4,9 @@ import { useState, type FormEvent } from 'react';
 // Next
 import Head from 'next/head';
 
+// axios
+import axios from 'axios';
+
 // MUI
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
@@ -14,10 +17,15 @@ import Button from '@mui/material/Button';
 export default function Home() {
   const [searchText, setSearchText] = useState('');
 
-  const handleSearchSubmit = (e: FormEvent) => {
+  const handleSearchSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    console.log(searchText);
+    try {
+      const { data } = await axios.get(`/api/movies/search?q=${searchText}`);
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
