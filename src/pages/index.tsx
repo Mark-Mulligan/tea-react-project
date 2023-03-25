@@ -1,9 +1,10 @@
 // React
-import { useState, type FormEvent } from 'react';
+import { useState, type FormEvent, useEffect } from 'react';
 
 // Next
 import Head from 'next/head';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 // axios
 import axios from 'axios';
@@ -21,24 +22,39 @@ import CardMedia from '@mui/material/CardMedia';
 import CardActionArea from '@mui/material/CardActionArea';
 
 // Types
-import { type OMDBSearchResponse, type OMDBMovieSearchData } from '@/customTypes/omdbApi';
+import { type OMDBSearchResponse, type OMDBMovieSearchData } from '../customTypes/omdbApi';
+
+// Utils
+import { createQueryObject } from '@/utils/routing';
 
 export default function Home() {
-  const [searchText, setSearchText] = useState('');
+  const router = useRouter();
+
+  const [searchText, setSearchText] = useState(router?.query?.q || '');
   const [searchResultCount, setSearchResultCount] = useState(0);
   const [searchResults, setSearchResults] = useState<OMDBMovieSearchData[]>([]);
 
   const handleSearchSubmit = async (e: FormEvent) => {
     e.preventDefault();
-
-    try {
-      const { data } = await axios.get<OMDBSearchResponse>(`/api/movies/search?q=${searchText}`);
-      setSearchResultCount(Number(data.totalResults));
-      setSearchResults(data.Search);
-    } catch (err) {
-      console.log(err);
-    }
+    await router.push({ pathname: '/', query: createQueryObject(router, 'q', searchText) }, undefined);
   };
+
+  useEffect(() => {
+    const getMovieSearch = async (search: string) => {
+      try {
+        const { data } = await axios.get<OMDBSearchResponse>(`/api/movies/search?q=${search}`);
+        setSearchResultCount(Number(data.totalResults));
+        setSearchResults(data.Search);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    if (router.query.q && typeof router.query.q === 'string') {
+      const search = router.query.q;
+      getMovieSearch(search);
+    }
+  }, [router.query]);
 
   return (
     <>
