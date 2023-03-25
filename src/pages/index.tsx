@@ -3,6 +3,7 @@ import { useState, type FormEvent } from 'react';
 
 // Next
 import Head from 'next/head';
+import Link from 'next/link';
 
 // axios
 import axios from 'axios';
@@ -18,7 +19,6 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import CardActionArea from '@mui/material/CardActionArea';
-import CardActions from '@mui/material/CardActions';
 
 // Types
 import { type OMDBSearchResponse, type OMDBMovieSearchData } from '@/customTypes/omdbApi';
@@ -72,28 +72,30 @@ export default function Home() {
               {searchResults.map((result) => {
                 return (
                   <Grid item md={4} sm={6} xs={12} key={result.imdbID}>
-                    <CardActionArea sx={{ height: '100%' }}>
-                      <Card sx={{ height: '100%' }}>
-                        <CardMedia
-                          component="img"
-                          height="140"
-                          image={result.Poster}
-                          alt={result.Title}
-                          sx={{ backgroundPositon: 'top' }}
-                        />
-                        <CardContent sx={{ marginBottom: '3rem' }}>
-                          <Typography gutterBottom variant="h5" component="div">
-                            {result.Title}
-                          </Typography>
-                          <Typography variant="body2" color="text.secondary">
-                            {result.Type} - {result.Year}
-                          </Typography>
-                          <Button size="small" color="primary" sx={{ marginTop: '1rem' }}>
-                            View Details
-                          </Button>
-                        </CardContent>
-                      </Card>
-                    </CardActionArea>
+                    <Link href={`/movie/${result.imdbID}`} passHref>
+                      <CardActionArea sx={{ height: '100%' }}>
+                        <Card sx={{ height: '100%' }}>
+                          <CardMedia
+                            component="img"
+                            height="140"
+                            image={result.Poster}
+                            alt={result.Title}
+                            sx={{ backgroundPositon: 'top' }}
+                          />
+                          <CardContent sx={{ marginBottom: '3rem' }}>
+                            <Typography gutterBottom variant="h5" component="div">
+                              {result.Title}
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary">
+                              {result.Type} - {result.Year}
+                            </Typography>
+                            <Button size="small" color="primary" sx={{ marginTop: '1rem' }}>
+                              View Details
+                            </Button>
+                          </CardContent>
+                        </Card>
+                      </CardActionArea>
+                    </Link>
                   </Grid>
                 );
               })}
