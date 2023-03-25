@@ -20,6 +20,10 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import CardActionArea from '@mui/material/CardActionArea';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 // Types
 import { type OMDBSearchResponse, type OMDBMovieSearchData } from '../customTypes/omdbApi';
@@ -30,19 +34,56 @@ import { createQueryObject } from '@/utils/routing';
 export default function Home() {
   const router = useRouter();
 
-  const [searchText, setSearchText] = useState(router?.query?.q || '');
+  const [searchText, setSearchText] = useState((router?.query?.q as string) || '');
+  const [mediaType, setMediaType] = useState((router?.query?.type as string) || 'any');
+  const [releaseYear, setReleaseYear] = useState('');
   const [searchResultCount, setSearchResultCount] = useState(0);
   const [searchResults, setSearchResults] = useState<OMDBMovieSearchData[]>([]);
 
+  const handleMediaTypeChange = (event: SelectChangeEvent) => {
+    setMediaType(event.target.value);
+  };
+
+  const setDefaultValuesOnQuery = () => {
+    if (router.query.q && typeof router.query.q === 'string') {
+      setSearchText(router.query.q);
+    }
+
+    if (router.query.type && typeof router.query.type === 'string') {
+      setMediaType(router.query.type);
+    }
+
+    if (router.query.year && typeof router.query.year === 'string') {
+      setReleaseYear(router.query.year);
+    }
+  };
+
   const handleSearchSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    await router.push({ pathname: '/', query: createQueryObject(router, 'q', searchText) }, undefined);
+
+    if (searchText || mediaType !== 'any' || releaseYear) {
+      const queryObject: { q?: string; type?: string; year?: string } = {};
+
+      if (searchText) {
+        queryObject.q = searchText;
+      }
+
+      if (mediaType && mediaType !== 'any') {
+        queryObject.type = mediaType;
+      }
+
+      if (releaseYear) {
+        queryObject.year = releaseYear;
+      }
+
+      await router.push({ pathname: '/', query: queryObject }, undefined);
+    }
   };
 
   useEffect(() => {
-    const getMovieSearch = async (search: string) => {
+    const getMovieSearch = async (searchString: string) => {
       try {
-        const { data } = await axios.get<OMDBSearchResponse>(`/api/movies/search?q=${search}`);
+        const { data } = await axios.get<OMDBSearchResponse>(`/api/movies/search${searchString}`);
         setSearchResultCount(Number(data.totalResults));
         setSearchResults(data.Search);
       } catch (err) {
@@ -50,9 +91,26 @@ export default function Home() {
       }
     };
 
-    if (router.query.q && typeof router.query.q === 'string') {
-      const search = router.query.q;
-      getMovieSearch(search);
+    setDefaultValuesOnQuery();
+
+    if (router.query) {
+      let url = new URL('/api/movies/search', process.env.NEXT_PUBLIC_BASE_URL);
+
+      if (router.query.q && typeof router.query.q === 'string') {
+        url.searchParams.set('q', router.query.q);
+      }
+
+      if (router.query.type && typeof router.query.type === 'string') {
+        url.searchParams.set('type', router.query.type);
+      }
+
+      if (router.query.year && typeof router.query.year === 'string') {
+        url.searchParams.set('year', router.query.year);
+      }
+
+      if (url.search) {
+        getMovieSearch(url.search);
+      }
     }
   }, [router.query]);
 
@@ -69,14 +127,45 @@ export default function Home() {
           <Typography variant="h1" align="center" sx={{ fontSize: '3rem', marginBottom: '1.5rem' }}>
             Search Movies
           </Typography>
-          <Box component="form" sx={{ maxWidth: 500, margin: 'auto' }} onSubmit={handleSearchSubmit}>
-            <TextField
-              required
-              fullWidth
-              value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
-              label="Search"
-            />
+          <Box component="form" onSubmit={handleSearchSubmit}>
+            <Grid container spacing={4}>
+              <Grid item md={4} sm={6} xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  value={searchText}
+                  onChange={(e) => setSearchText(e.target.value)}
+                  label="Search Titles"
+                />
+              </Grid>
+              <Grid item md={4} sm={6} xs={12}>
+                <FormControl fullWidth>
+                  <InputLabel id="media-type-select-label">Media Type</InputLabel>
+                  <Select
+                    labelId="media-type-select-label"
+                    id="media-type-select"
+                    value={mediaType}
+                    label="Media Type"
+                    onChange={handleMediaTypeChange}
+                  >
+                    <MenuItem value="any">Any</MenuItem>
+                    <MenuItem value="movie">Movie</MenuItem>
+                    <MenuItem value="series">Series</MenuItem>
+                    <MenuItem value="episode">Episode</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item md={4} sm={6} xs={12}>
+                <TextField
+                  type="number"
+                  fullWidth
+                  value={releaseYear}
+                  onChange={(e) => setReleaseYear(e.target.value)}
+                  label="Release Year"
+                />
+              </Grid>
+            </Grid>
+
             <Box sx={{ textAlign: 'right', marginTop: '1rem', marginBottom: '2rem' }}>
               <Button variant="contained" type="submit">
                 Search
