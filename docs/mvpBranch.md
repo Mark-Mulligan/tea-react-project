@@ -5,7 +5,7 @@ I could finish the items nessary to complete the project based on the descriptio
 
 ### Planning
 
-First, I read through the requirements for the project on github ([requirement](https://github.com/callemall/tea-react-challenge)). After reading through the requirements,
+First, I read through the requirements for the project on github ([requirements](https://github.com/callemall/tea-react-challenge)). After reading through the requirements,
 I thought over how I should implement this project and what technolgies should I use. Here are some fo the different items I thought about
 
 #### API Key
