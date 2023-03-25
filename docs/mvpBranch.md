@@ -6,12 +6,12 @@ I could finish the items nessary to complete the project based on the descriptio
 ### Planning
 
 First, I read through the requirements for the project on github ([requirements](https://github.com/callemall/tea-react-challenge)). After reading through the requirements,
-I thought over how I should implement this project and what technolgies should I use. Here are some fo the different items I thought about
+I thought over how I should implement this project and what technolgies should I use. Here are some of the different items I thought about
 
 #### API Key
 
-Since there was an api key, I wanted to not expose this to the client so I would need to have a server for the project. I could either do a standalone express server or use
-Next.js. I decided to go with Next.js for the ease of developement along with the server side rendering option for SEO purposes.
+Since there was an api key, I did not want to expose this to the client. To accomplish this, I knew would need to have a server for the project.
+I could either do a standalone express server or use Next.js. I decided to go with Next.js for the ease of developement along with the server side rendering option for SEO purposes.
 
 #### SEO
 
@@ -25,7 +25,7 @@ developing components or styling the app.
 
 #### Typescript
 
-I tend to always use typescript on all my projects now. It is especially useful for this project since it allows me to basically document the api calls and know exactly what is being
+I tend to always use typescript on all my projects. It is especially useful for this project since it allowed me to document the api calls and know exactly what is being
 returned. Since the api calls in this project are large objects, typescript was super import to make sure I was access the right keys on these objects when building out the project.
 
 #### Pages
