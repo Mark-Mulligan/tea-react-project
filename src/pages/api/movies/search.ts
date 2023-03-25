@@ -29,14 +29,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         url.searchParams.set('y', req.query.y);
       }
 
+      if (req.query.page && typeof req.query.page === 'string') {
+        url.searchParams.set('page', req.query.page);
+      }
+
       if (url.search) {
         url.searchParams.set('apikey', process.env.OMDB_APIKEY || '');
 
-        console.log(url.href);
-
         try {
           const { data } = await axios.get<OMDBSearchResponse>(url.href);
-          res.status(200).json(data);
+          const currentPage = Number(req.query.page);
+          const totalResults = Number(data.totalResults);
+          let nextPage = '';
+
+          if (currentPage * 10 < totalResults) {
+            nextPage = (currentPage + 1).toString();
+          }
+
+          res.status(200).json({ results: data, nextPage });
         } catch (err) {
           console.log(err);
           res.status(500).json({ message: 'Unabled to search movies' });

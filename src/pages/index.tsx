@@ -30,8 +30,8 @@ import Chip from '@mui/material/Chip';
 // Types
 import { type OMDBSearchResponse, type OMDBMovieSearchData } from '../customTypes/omdbApi';
 
-// Utils
-import { createQueryObject } from '@/utils/routing';
+// Components
+import InfinateScroll from '@/componets/InfinateScroll';
 
 export default function Home() {
   const router = useRouter();
@@ -40,6 +40,7 @@ export default function Home() {
   const [mediaType, setMediaType] = useState((router?.query?.type as string) || 'any');
   const [releaseYear, setReleaseYear] = useState('');
   const [searchResultCount, setSearchResultCount] = useState(0);
+  const [nextPage, setNextPage] = useState('');
   const [searchResults, setSearchResults] = useState<OMDBMovieSearchData[]>([]);
 
   const handleMediaTypeChange = (event: SelectChangeEvent) => {
@@ -64,7 +65,7 @@ export default function Home() {
     e.preventDefault();
 
     if (searchText || mediaType !== 'any' || releaseYear) {
-      const queryObject: { q?: string; type?: string; y?: string } = {};
+      const queryObject: { q?: string; type?: string; y?: string; page: string } = { page: '1' };
 
       if (searchText) {
         queryObject.q = searchText;
@@ -85,9 +86,14 @@ export default function Home() {
   useEffect(() => {
     const getMovieSearch = async (searchString: string) => {
       try {
-        const { data } = await axios.get<OMDBSearchResponse>(`/api/movies/search${searchString}`);
-        setSearchResultCount(Number(data.totalResults));
-        setSearchResults(data.Search);
+        const { data } = await axios.get<{ results: OMDBSearchResponse; nextPage: string }>(
+          `/api/movies/search${searchString}`,
+        );
+        setSearchResultCount(Number(data.results.totalResults));
+        setSearchResults(data.results.Search);
+
+        console.log(data);
+        setNextPage(data.nextPage);
       } catch (err) {
         console.log(err);
       }
@@ -108,6 +114,10 @@ export default function Home() {
 
       if (router.query.y && typeof router.query.y === 'string') {
         url.searchParams.set('y', router.query.y);
+      }
+
+      if (router.query.page && typeof router.query.page === 'string') {
+        url.searchParams.set('page', router.query.page);
       }
 
       if (url.search) {
@@ -205,6 +215,14 @@ export default function Home() {
                   </Grid>
                 );
               })}
+              {nextPage && (
+                <InfinateScroll
+                  nextPage={nextPage}
+                  searchResults={searchResults}
+                  setSearchResults={setSearchResults}
+                  setNextPage={setNextPage}
+                />
+              )}
             </Grid>
           )}
         </Container>
