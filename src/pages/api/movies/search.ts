@@ -25,12 +25,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         url.searchParams.set('type', req.query.type);
       }
 
-      if (req.query.year && typeof req.query.year === 'string') {
-        url.searchParams.set('year', req.query.year);
+      if (req.query.y && typeof req.query.y === 'string') {
+        url.searchParams.set('y', req.query.y);
       }
 
       if (url.search) {
         url.searchParams.set('apikey', process.env.OMDB_APIKEY || '');
+
+        console.log(url.href);
 
         try {
           const { data } = await axios.get<OMDBSearchResponse>(url.href);

@@ -20,3 +20,14 @@ ul,
 li {
   list-style: none;
 }
+
+.clickable {
+  -webkit-tap-highlight-color: transparent;
+  background-color: transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.clickable:hover {
+  filter: brightness(1.4);
+}

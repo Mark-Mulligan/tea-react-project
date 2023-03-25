@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // React
 import { useState, type FormEvent, useEffect } from 'react';
 
@@ -24,6 +25,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Chip from '@mui/material/Chip';
 
 // Types
 import { type OMDBSearchResponse, type OMDBMovieSearchData } from '../customTypes/omdbApi';
@@ -62,7 +64,7 @@ export default function Home() {
     e.preventDefault();
 
     if (searchText || mediaType !== 'any' || releaseYear) {
-      const queryObject: { q?: string; type?: string; year?: string } = {};
+      const queryObject: { q?: string; type?: string; y?: string } = {};
 
       if (searchText) {
         queryObject.q = searchText;
@@ -73,7 +75,7 @@ export default function Home() {
       }
 
       if (releaseYear) {
-        queryObject.year = releaseYear;
+        queryObject.y = releaseYear;
       }
 
       await router.push({ pathname: '/', query: queryObject }, undefined);
@@ -104,8 +106,8 @@ export default function Home() {
         url.searchParams.set('type', router.query.type);
       }
 
-      if (router.query.year && typeof router.query.year === 'string') {
-        url.searchParams.set('year', router.query.year);
+      if (router.query.y && typeof router.query.y === 'string') {
+        url.searchParams.set('y', router.query.y);
       }
 
       if (url.search) {
@@ -191,12 +193,11 @@ export default function Home() {
                             <Typography gutterBottom variant="h5" component="div">
                               {result.Title}
                             </Typography>
-                            <Typography variant="body2" color="text.secondary">
+                            <Typography variant="body2" color="text.secondary" sx={{ marginBottom: '2rem' }}>
                               {result.Type} - {result.Year}
                             </Typography>
-                            <Button size="small" color="primary" sx={{ marginTop: '1rem' }}>
-                              View Details
-                            </Button>
+
+                            <Chip label="View Details" variant="outlined" clickable />
                           </CardContent>
                         </Card>
                       </CardActionArea>
