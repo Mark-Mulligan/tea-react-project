@@ -59,9 +59,8 @@ const InfinateScroll: FC<IProps> = ({ nextPage, searchResults, setSearchResults,
             `/api/movies/search${searchString}`,
           );
           // setSearchResultCount(Number(data.results.totalResults));
-          setSearchResults([...searchResults, ...data.results.Search]);
 
-          console.log(data);
+          setSearchResults([...searchResults, ...data.results.Search]);
           setNextPage(data.nextPage);
         } catch (err) {
           console.log(err);

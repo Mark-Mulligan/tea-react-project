@@ -4,7 +4,6 @@ import { useState, type FormEvent, useEffect } from 'react';
 
 // Next
 import Head from 'next/head';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 // axios
@@ -17,23 +16,19 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import CardActionArea from '@mui/material/CardActionArea';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import Chip from '@mui/material/Chip';
 import Autocomplete from '@mui/material/Autocomplete';
+import CircularProgress from '@mui/material/CircularProgress';
 
 // Types
 import { type OMDBSearchResponse, type OMDBMovieSearchData } from '../customTypes/omdbApi';
-import { type SelectOption } from '@/customTypes/ui';
 
 // Components
 import InfinateScroll from '@/componets/InfinateScroll';
+import MediaCard from '@/componets/MediaCard';
 
 // utils
 import { yearSelectOptions } from '../utils/mediaSearch';
@@ -48,6 +43,7 @@ export default function Home() {
   const [nextPage, setNextPage] = useState('');
   const [noResultsText, setNoResultsText] = useState('');
   const [searchResults, setSearchResults] = useState<OMDBMovieSearchData[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleMediaTypeChange = (event: SelectChangeEvent) => {
     setMediaType(event.target.value);
@@ -92,6 +88,7 @@ export default function Home() {
   useEffect(() => {
     const getMovieSearch = async (searchString: string) => {
       try {
+        setIsLoading(true);
         const { data } = await axios.get<{ results: OMDBSearchResponse; nextPage: string }>(
           `/api/movies/search${searchString}`,
         );
@@ -115,6 +112,7 @@ export default function Home() {
         setNextPage('');
         setNoResultsText('Search failed.');
       }
+      setIsLoading(false);
     };
 
     setDefaultValuesOnQuery();
@@ -207,35 +205,18 @@ export default function Home() {
               </Button>
             </Box>
           </Box>
+          {isLoading && (
+            <Box sx={{ display: 'flex', position: 'relative', zIndex: '10' }}>
+              <CircularProgress sx={{ position: 'absolute', left: 'calc(50% - 25px)' }} />
+            </Box>
+          )}
           {noResultsText && <Typography textAlign="center">No results were found for these filters.</Typography>}
           {searchResults.length > 0 && (
             <Grid container spacing={4}>
               {searchResults.map((result) => {
                 return (
                   <Grid item md={4} sm={6} xs={12} key={result.imdbID}>
-                    <Link href={`/movie/${result.imdbID}`} passHref>
-                      <CardActionArea sx={{ height: '100%' }}>
-                        <Card sx={{ height: '100%' }}>
-                          <CardMedia
-                            component="img"
-                            height="140"
-                            image={result.Poster}
-                            alt={result.Title}
-                            sx={{ backgroundPositon: 'top' }}
-                          />
-                          <CardContent sx={{ marginBottom: '3rem' }}>
-                            <Typography gutterBottom variant="h5" component="div">
-                              {result.Title}
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary" sx={{ marginBottom: '2rem' }}>
-                              {result.Type} - {result.Year}
-                            </Typography>
-
-                            <Chip label="View Details" variant="outlined" clickable />
-                          </CardContent>
-                        </Card>
-                      </CardActionArea>
-                    </Link>
+                    <MediaCard data={result} />
                   </Grid>
                 );
               })}

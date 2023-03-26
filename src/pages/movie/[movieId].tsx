@@ -15,6 +15,7 @@ import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
 
 // types
 import { type MovieDetails } from '@/customTypes/omdbApi';
@@ -45,64 +46,72 @@ const MoviePage: NextPage<IProps> = ({ movieDetails }) => {
           <Typography align="center" color="text.secondary" sx={{ marginBottom: '1.5rem' }}>
             {movieDetails.Year} <sup>.</sup> {movieDetails.Rated} <sup>.</sup> {movieDetails.Runtime}
           </Typography>
-          <Paper sx={{ display: 'flex' }}>
-            <img alt={`${movieDetails.Title} box office poster`} src={movieDetails.Poster} />
-            <Box sx={{ padding: '1rem' }}>
-              <ul>
-                <li>
-                  <Typography variant="h6">Plot</Typography>
-                  <Typography color="text.secondary" sx={{ marginBottom: '1rem' }}>
-                    {movieDetails.Plot}
-                  </Typography>
-                </li>
-                <li>
-                  <Typography variant="h6">Director</Typography>
-                  <Typography color="text.secondary" sx={{ marginBottom: '1rem' }}>
-                    {movieDetails.Director}
-                  </Typography>
-                </li>
-                <li>
-                  <Typography variant="h6">Writers</Typography>
-                  <Typography color="text.secondary" sx={{ marginBottom: '1rem' }}>
-                    {movieWriters.map((writer, index) => {
-                      if (index < movieWriters.length - 1) {
-                        return (
-                          <span key={writer}>
-                            {writer} <sup>.</sup>{' '}
-                          </span>
-                        );
-                      }
-                      return <span key={writer}>{writer}</span>;
-                    })}
-                  </Typography>
-                </li>
-                <li>
-                  <Typography variant="h6">Actors</Typography>
-                  <Typography color="text.secondary" sx={{ marginBottom: '1rem' }}>
-                    {actors.map((actor, index) => {
-                      if (index < actors.length - 1) {
-                        return (
-                          <span key={actor}>
-                            {actor} <sup>.</sup>{' '}
-                          </span>
-                        );
-                      }
-                      return <span key={actor}>{actor}</span>;
-                    })}
-                  </Typography>
-                </li>
-                <li>
-                  <Typography variant="h6" sx={{ marginBottom: '0.5rem' }}>
-                    Genre
-                  </Typography>
-                  <Stack direction="row" spacing={1} sx={{ marginBottom: '1rem' }}>
-                    {movieGenres.map((genre) => {
-                      return <Chip label={genre} variant="outlined" key={genre} />;
-                    })}
-                  </Stack>
-                </li>
-              </ul>
-            </Box>
+          <Paper>
+            <Grid container>
+              <Grid item md={4} sm={6} xs={12}>
+                <img
+                  alt={`${movieDetails.Title} box office poster`}
+                  src={movieDetails.Poster}
+                  style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                />
+              </Grid>
+              <Grid item md={8} sm={6} xs={12} sx={{ padding: '1.5rem' }}>
+                <ul>
+                  <li>
+                    <Typography variant="h6">Plot</Typography>
+                    <Typography color="text.secondary" sx={{ marginBottom: '1rem' }}>
+                      {movieDetails.Plot}
+                    </Typography>
+                  </li>
+                  <li>
+                    <Typography variant="h6">Director</Typography>
+                    <Typography color="text.secondary" sx={{ marginBottom: '1rem' }}>
+                      {movieDetails.Director}
+                    </Typography>
+                  </li>
+                  <li>
+                    <Typography variant="h6">Writers</Typography>
+                    <Typography color="text.secondary" sx={{ marginBottom: '1rem' }}>
+                      {movieWriters.map((writer, index) => {
+                        if (index < movieWriters.length - 1) {
+                          return (
+                            <span key={writer}>
+                              {writer} <sup>.</sup>{' '}
+                            </span>
+                          );
+                        }
+                        return <span key={writer}>{writer}</span>;
+                      })}
+                    </Typography>
+                  </li>
+                  <li>
+                    <Typography variant="h6">Actors</Typography>
+                    <Typography color="text.secondary" sx={{ marginBottom: '1rem' }}>
+                      {actors.map((actor, index) => {
+                        if (index < actors.length - 1) {
+                          return (
+                            <span key={actor}>
+                              {actor} <sup>.</sup>{' '}
+                            </span>
+                          );
+                        }
+                        return <span key={actor}>{actor}</span>;
+                      })}
+                    </Typography>
+                  </li>
+                  <li>
+                    <Typography variant="h6" sx={{ marginBottom: '0.5rem' }}>
+                      Genre
+                    </Typography>
+                    <Stack direction="row" spacing={1} sx={{ marginBottom: '1rem' }}>
+                      {movieGenres.map((genre) => {
+                        return <Chip label={genre} variant="outlined" key={genre} />;
+                      })}
+                    </Stack>
+                  </li>
+                </ul>
+              </Grid>
+            </Grid>
           </Paper>
         </Container>
       </main>
