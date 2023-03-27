@@ -1,8 +1,53 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# TEA-React-Project
 
-## Getting Started
+## Built With
 
-First, run the development server:
+- Next.js
+- Typescript
+- MUI
+- [OMDb API](https://www.omdbapi.com)
+
+## Features
+
+- ServerSide Rendering
+- Infite Scrolling through pagination on the Search screen
+- Custom MUI theme changes
+- Next.js pages and query strings
+
+## Approach
+
+I decided to approach this challenge through itertations. These iterations can be seen in the branches that are included in the repo. I also have details about each branch and iteration in the the /docs directory if you would like to learn more.
+
+I took this apporach so that at each stage of the process I would have a working solution. I think it's imporant in software developement to also start with working parts. That way, if timelines get moved up, you can deliver working solutions at any given time. It also gives you more time to work on extra features since you have already completed the mvp for the project.
+
+Here are the branches listed in order of developement.
+
+1. mvp
+2. improved-search
+3. infinite-scroll
+
+## Run/Develope Locally
+
+1. First, make sure to clone this repo on your locally machine
+
+```bash
+git clone https://github.com/Mark-Mulligan/tea-react-project.git
+```
+
+2. Next, make sure to install all the app dependcies using a node package manager
+
+```bash
+npm install
+# or
+yarn install
+# etc
+```
+
+3. Create a .env.local file in the root of the project. Make sure to copy the .env.example for the variables. Most of the variables in the example have values that work for local development.
+
+You will need to get an api key from [OMDb API](https://www.omdbapi.com). You can follow the insturctions [here](https://www.omdbapi.com/apikey.aspx) to get your key for development. Free keys have a limit of 1000 request per day.
+
+4. To start the instance locally, run the following command
 
 ```bash
 npm run dev
@@ -12,17 +57,9 @@ yarn dev
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+If all the steps above were followed correctly, you should have a working version of the app running on your system. Navigate to localhost:3000 in the browser to view the app.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
+## Learn More About Next
 
 To learn more about Next.js, take a look at the following resources:
 
@@ -30,9 +67,3 @@ To learn more about Next.js, take a look at the following resources:
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

@@ -1,4 +1,4 @@
-## MVP Branch
+## Improved Search Branch
 
 The goal of this branch was to add more functionality to the search page. I wanted to add the ability to search by title and add the additional features of type or movie to
 my search. The other thing I wanted to do was to put the query in the url. That way, when a user navigates to the individual media page or reloads the page, they maintain
