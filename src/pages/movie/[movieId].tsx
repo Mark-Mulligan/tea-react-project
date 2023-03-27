@@ -22,6 +22,9 @@ import DotList from '../../componets/DotList';
 // types
 import { type MovieDetails } from '@/customTypes/omdbApi';
 
+// utils
+import { formatDate } from '../../utils/movieIdPage';
+
 interface IProps {
   movieDetails: MovieDetails;
 }
@@ -98,11 +101,11 @@ const MoviePage: NextPage<IProps> = ({ movieDetails }) => {
           </Paper>
 
           <Paper sx={{ padding: '1.5rem' }}>
-            <Typography variant="h2" textAlign="center" sx={{ fontSize: '2.5rem', marginBottom: '1.5rem' }}>
+            <Typography variant="h2" textAlign="center" sx={{ fontSize: '2.2rem', marginBottom: '1.5rem' }}>
               Additional Info
             </Typography>
             <Grid container spacing={2}>
-              <Grid item sm={5} xs={6}>
+              <Grid item md={5} sm={6} xs={12}>
                 <Typography variant="h6">Ratings</Typography>
                 {movieDetails.Ratings.map((rating) => {
                   return (
@@ -112,17 +115,25 @@ const MoviePage: NextPage<IProps> = ({ movieDetails }) => {
                   );
                 })}
               </Grid>
-              <Grid item sm={4} xs={6}>
+              <Grid item md={3} sm={6} xs={12}>
                 <Typography variant="h6">Box Office</Typography>
-                <Typography color="text.secondary">{movieDetails.BoxOffice}</Typography>
+                <Typography color="text.secondary">{movieDetails.BoxOffice || 'N/A'}</Typography>
               </Grid>
-              <Grid item sm={3} xs={6}>
+              <Grid item md={4} sm={6} xs={12}>
                 <Typography variant="h6">Location</Typography>
                 <Typography color="text.secondary">{movieDetails.Country}</Typography>
               </Grid>
-              <Grid item xs={4}>
+              <Grid item md={5} sm={6} xs={12}>
                 <Typography variant="h6">Awards</Typography>
                 <Typography color="text.secondary">{movieDetails.Awards}</Typography>
+              </Grid>
+              <Grid item md={3} sm={6} xs={12}>
+                <Typography variant="h6">Release Date</Typography>
+                <Typography color="text.secondary">{formatDate(movieDetails.Released)}</Typography>
+              </Grid>
+              <Grid item md={4} sm={6} xs={12}>
+                <Typography variant="h6">Media Type</Typography>
+                <Typography color="text.secondary">{movieDetails.Type}</Typography>
               </Grid>
             </Grid>
           </Paper>

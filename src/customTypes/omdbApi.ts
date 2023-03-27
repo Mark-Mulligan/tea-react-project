@@ -16,7 +16,6 @@ export interface OMDBSearchResponse {
 export interface MovieDetails {
   Title: string;
   Year: string;
-  Rated: string;
   Runtime: string; // 140 min
   Genre: string;
   Director: string;
@@ -27,7 +26,9 @@ export interface MovieDetails {
   Country: string;
   Awards: string;
   Poster: string;
+  Rated: string;
   Ratings: { Source: string; Value: string }[];
+  Released: string;
   MetaScore: string;
   imdbRating: string;
   imdbVotes: string;

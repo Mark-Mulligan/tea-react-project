@@ -1,6 +1,3 @@
-// Types
-import { SelectOption } from '../customTypes/ui';
-
 export const yearSelectOptions = () => {
   const currentYear = 2023;
   const yearOptions: string[] = [];
