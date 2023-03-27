@@ -50,7 +50,7 @@ const MoviePage: NextPage<IProps> = ({ movieDetails }) => {
           <Typography align="center" color="text.secondary" sx={{ marginBottom: '1.5rem' }}>
             {movieDetails.Year} <sup>.</sup> {movieDetails.Rated} <sup>.</sup> {movieDetails.Runtime}
           </Typography>
-          <Paper>
+          <Paper sx={{ marginBottom: '2rem' }}>
             <Grid container>
               <Grid item md={4} sm={5} xs={12} alignItems="center">
                 <img
@@ -92,17 +92,37 @@ const MoviePage: NextPage<IProps> = ({ movieDetails }) => {
                       })}
                     </Stack>
                   </li>
-                  <li>
-                    <Typography variant="h6">Ratings</Typography>
-                    {movieDetails.Ratings.map((rating) => {
-                      return (
-                        <Typography color="text.secondary" key={rating.Source}>
-                          {rating.Source} - {rating.Value}
-                        </Typography>
-                      );
-                    })}
-                  </li>
                 </ul>
+              </Grid>
+            </Grid>
+          </Paper>
+
+          <Paper sx={{ padding: '1.5rem' }}>
+            <Typography variant="h2" textAlign="center" sx={{ fontSize: '2.5rem', marginBottom: '1.5rem' }}>
+              Additional Info
+            </Typography>
+            <Grid container spacing={2}>
+              <Grid item sm={5} xs={6}>
+                <Typography variant="h6">Ratings</Typography>
+                {movieDetails.Ratings.map((rating) => {
+                  return (
+                    <Typography color="text.secondary" key={rating.Source}>
+                      {rating.Source} - {rating.Value}
+                    </Typography>
+                  );
+                })}
+              </Grid>
+              <Grid item sm={4} xs={6}>
+                <Typography variant="h6">Box Office</Typography>
+                <Typography color="text.secondary">{movieDetails.BoxOffice}</Typography>
+              </Grid>
+              <Grid item sm={3} xs={6}>
+                <Typography variant="h6">Location</Typography>
+                <Typography color="text.secondary">{movieDetails.Country}</Typography>
+              </Grid>
+              <Grid item xs={4}>
+                <Typography variant="h6">Awards</Typography>
+                <Typography color="text.secondary">{movieDetails.Awards}</Typography>
               </Grid>
             </Grid>
           </Paper>
