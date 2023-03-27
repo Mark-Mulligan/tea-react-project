@@ -27,7 +27,7 @@ export interface MovieDetails {
   Country: string;
   Awards: string;
   Poster: string;
-  Ratings: { source: string; Value: string }[];
+  Ratings: { Source: string; Value: string }[];
   MetaScore: string;
   imdbRating: string;
   imdbVotes: string;

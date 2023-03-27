@@ -58,8 +58,6 @@ const InfinateScroll: FC<IProps> = ({ nextPage, searchResults, setSearchResults,
           const { data } = await axios.get<{ results: OMDBSearchResponse; nextPage: string }>(
             `/api/movies/search${searchString}`,
           );
-          // setSearchResultCount(Number(data.results.totalResults));
-
           setSearchResults([...searchResults, ...data.results.Search]);
           setNextPage(data.nextPage);
         } catch (err) {

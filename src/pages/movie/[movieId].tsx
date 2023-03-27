@@ -10,12 +10,14 @@ import axios from 'axios';
 
 // MUI
 import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
+
+// components
+import DotList from '../../componets/DotList';
 
 // types
 import { type MovieDetails } from '@/customTypes/omdbApi';
@@ -29,6 +31,8 @@ const MoviePage: NextPage<IProps> = ({ movieDetails }) => {
   const movieWriters = movieDetails.Writer.split(',');
   const actors = movieDetails.Actors.split(',');
   const pageTitle = `${movieDetails.Title} (${movieDetails.Year})`;
+
+  console.log(movieDetails);
 
   return (
     <>
@@ -71,33 +75,11 @@ const MoviePage: NextPage<IProps> = ({ movieDetails }) => {
                   </li>
                   <li>
                     <Typography variant="h6">Writers</Typography>
-                    <Typography color="text.secondary" sx={{ marginBottom: '1rem' }}>
-                      {movieWriters.map((writer, index) => {
-                        if (index < movieWriters.length - 1) {
-                          return (
-                            <span key={writer}>
-                              {writer} <sup>.</sup>{' '}
-                            </span>
-                          );
-                        }
-                        return <span key={writer}>{writer}</span>;
-                      })}
-                    </Typography>
+                    <DotList listItems={movieWriters} />
                   </li>
                   <li>
                     <Typography variant="h6">Actors</Typography>
-                    <Typography color="text.secondary" sx={{ marginBottom: '1rem' }}>
-                      {actors.map((actor, index) => {
-                        if (index < actors.length - 1) {
-                          return (
-                            <span key={actor}>
-                              {actor} <sup>.</sup>{' '}
-                            </span>
-                          );
-                        }
-                        return <span key={actor}>{actor}</span>;
-                      })}
-                    </Typography>
+                    <DotList listItems={actors} />
                   </li>
                   <li>
                     <Typography variant="h6" sx={{ marginBottom: '0.5rem' }}>
@@ -108,6 +90,16 @@ const MoviePage: NextPage<IProps> = ({ movieDetails }) => {
                         return <Chip label={genre} variant="outlined" key={genre} />;
                       })}
                     </Stack>
+                  </li>
+                  <li>
+                    <Typography variant="h6">Ratings</Typography>
+                    {movieDetails.Ratings.map((rating) => {
+                      return (
+                        <Typography color="text.secondary" key={rating.Source}>
+                          {rating.Source} - {rating.Value}
+                        </Typography>
+                      );
+                    })}
                   </li>
                 </ul>
               </Grid>
@@ -132,7 +124,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   try {
     const { data } = await axios.get<MovieDetails>(
-      `${process.env.OMDB_URL}?i=${movieId}&apikey=${process.env.OMDB_APIKEY}`,
+      `${process.env.OMDB_URL}?i=${movieId}&plot=full&apikey=${process.env.OMDB_APIKEY}`,
     );
 
     return {

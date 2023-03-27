@@ -45,6 +45,15 @@ export default function Home() {
   const [searchResults, setSearchResults] = useState<OMDBMovieSearchData[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  const resetSearch = async () => {
+    setSearchText('');
+    setMediaType('any');
+    setReleaseYear(null);
+    setSearchResultCount(0);
+    setSearchResults([]);
+    await router.push({ pathname: '/', query: {} }, undefined);
+  };
+
   const handleMediaTypeChange = (event: SelectChangeEvent) => {
     setMediaType(event.target.value);
   };
@@ -99,6 +108,7 @@ export default function Home() {
           setSearchResultCount(0);
           setNextPage('');
           setNoResultsText(data.results.Error);
+          console.log('this ran');
         } else {
           setSearchResultCount(Number(data.results.totalResults));
           setSearchResults(data.results.Search);
@@ -199,7 +209,10 @@ export default function Home() {
               </Grid>
             </Grid>
 
-            <Box sx={{ textAlign: 'right', marginTop: '1rem', marginBottom: '2rem' }}>
+            <Box sx={{ textAlign: 'center', marginTop: '1rem', marginBottom: '1.5rem' }}>
+              <Button variant="outlined" sx={{ marginRight: '1rem' }} onClick={resetSearch}>
+                Clear Search
+              </Button>
               <Button variant="contained" type="submit">
                 Search
               </Button>
@@ -210,7 +223,12 @@ export default function Home() {
               <CircularProgress sx={{ position: 'absolute', left: 'calc(50% - 25px)' }} />
             </Box>
           )}
-          {noResultsText && <Typography textAlign="center">No results were found for these filters.</Typography>}
+          {noResultsText && <Typography textAlign="center">{noResultsText}</Typography>}
+          {searchResultCount > 0 && (
+            <Typography textAlign="center" color="text.secondary" sx={{ marginBottom: '1rem' }}>
+              {searchResultCount} Results
+            </Typography>
+          )}
           {searchResults.length > 0 && (
             <Grid container spacing={4}>
               {searchResults.map((result) => {
