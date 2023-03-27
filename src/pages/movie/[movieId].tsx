@@ -30,12 +30,15 @@ interface IProps {
 }
 
 const MoviePage: NextPage<IProps> = ({ movieDetails }) => {
-  const movieGenres = movieDetails.Genre.split(',');
-  const movieWriters = movieDetails.Writer.split(',');
-  const actors = movieDetails.Actors.split(',');
-  const pageTitle = `${movieDetails.Title} (${movieDetails.Year})`;
+  // Needed to added the ? marks to handle 404 cases where the movieDetails are not found
+  const movieGenres = movieDetails?.Genre?.split(',') || [];
+  const movieWriters = movieDetails?.Writer?.split(',') || [];
+  const actors = movieDetails?.Actors?.split(',') || [];
+  const pageTitle = movieDetails ? `${movieDetails.Title} (${movieDetails.Year})` : '';
 
-  console.log(movieDetails);
+  if (!movieDetails) {
+    return <div>Not found</div>;
+  }
 
   return (
     <>
@@ -148,9 +151,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   if (typeof movieId !== 'string') {
     return {
-      props: {
-        movieDetails: null,
-      }, // will be passed to the page component as props
+      notFound: true,
     };
   }
 
@@ -159,6 +160,12 @@ export const getStaticProps: GetStaticProps = async (context) => {
       `${process.env.OMDB_URL}?i=${movieId}&plot=full&apikey=${process.env.OMDB_APIKEY}`,
     );
 
+    if (data.Response === 'False') {
+      return {
+        notFound: true,
+      };
+    }
+
     return {
       props: {
         movieDetails: data,
@@ -166,9 +173,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     };
   } catch (err) {
     return {
-      props: {
-        movieDetails: {},
-      }, // will be passed to the page component as props
+      notFound: true,
     };
   }
 };
