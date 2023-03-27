@@ -28,7 +28,7 @@ Here are the branches listed in order of developement.
 
 ## Run/Develope Locally
 
-1. First, make sure to clone this repo on your locally machine
+1. First, make sure to clone this repo on your local machine
 
 ```bash
 git clone https://github.com/Mark-Mulligan/tea-react-project.git
@@ -43,18 +43,16 @@ yarn install
 # etc
 ```
 
-3. Create a .env.local file in the root of the project. Make sure to copy the .env.example for the variables. Most of the variables in the example have values that work for local development.
-
-You will need to get an api key from [OMDb API](https://www.omdbapi.com). You can follow the insturctions [here](https://www.omdbapi.com/apikey.aspx) to get your key for development. Free keys have a limit of 1000 request per day.
+3. Create a .env.local file in the root of the project. Make sure to copy the .env.example for the variables. Most of the variables in the example have values that work for local development. <br>
+   You will need to get an api key from [OMDb API](https://www.omdbapi.com). You can follow the insturctions [here](https://www.omdbapi.com/apikey.aspx) to get your key for development. Free keys have a limit of 1000 request per day.
 
 4. To start the instance locally, run the following command
 
 ```bash
 npm run dev
 # or
-yarn dev
-# or
-pnpm dev
+yarn run dev
+# etc
 ```
 
 If all the steps above were followed correctly, you should have a working version of the app running on your system. Navigate to localhost:3000 in the browser to view the app.
