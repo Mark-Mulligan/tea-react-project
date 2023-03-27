@@ -18,7 +18,7 @@
 
 I decided to approach this challenge through itertations. These iterations can be seen in the branches that are included in the repo. I also have details about each branch and iteration in the the /docs directory if you would like to learn more.
 
-I took this apporach so that at each stage of the process I would have a working solution. I think it's imporant in software developement to also start with working parts. That way, if timelines get moved up, you can deliver working solutions at any given time. It also gives you more time to work on extra features since you have already completed the mvp for the project.
+I took this apporach so that at each stage of the process I would have a working solution. I think it's imporant in software developement to always start with working parts. That way, if timelines get moved up, you can deliver working solutions at any given time. It also gives you more time to work on extra features since you have already completed the mvp for the project.
 
 Here are the branches listed in order of developement.
 
@@ -43,8 +43,7 @@ yarn install
 # etc
 ```
 
-3. Create a .env.local file in the root of the project. Make sure to copy the .env.example for the variables. Most of the variables in the example have values that work for local development. <br>
-   You will need to get an api key from [OMDb API](https://www.omdbapi.com). You can follow the insturctions [here](https://www.omdbapi.com/apikey.aspx) to get your key for development. Free keys have a limit of 1000 request per day.
+3. Create a .env.local file in the root of the project. Make sure to copy the .env.example for the variables. Most of the variables in the example have values that work for local development. You will need to get an api key from [OMDb API](https://www.omdbapi.com). You can follow the insturctions [here](https://www.omdbapi.com/apikey.aspx) to get your key for development. Free keys have a limit of 1000 request per day.
 
 4. To start the instance locally, run the following command
 
