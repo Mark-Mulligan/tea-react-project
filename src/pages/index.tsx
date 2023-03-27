@@ -166,8 +166,8 @@ export default function Home() {
             Search Movies
           </Typography>
           <Box component="form" onSubmit={handleSearchSubmit}>
-            <Grid container spacing={4}>
-              <Grid item md={4} sm={6} xs={12}>
+            <Grid container spacing={4} sx={{ marginBottom: '1.5rem' }}>
+              <Grid item md={4} xs={12}>
                 <TextField
                   required
                   fullWidth
@@ -209,14 +209,18 @@ export default function Home() {
               </Grid>
             </Grid>
 
-            <Box sx={{ textAlign: 'center', marginTop: '1rem', marginBottom: '1.5rem' }}>
-              <Button variant="outlined" sx={{ marginRight: '1rem' }} onClick={resetSearch}>
-                Clear Search
-              </Button>
-              <Button variant="contained" type="submit">
-                Search
-              </Button>
-            </Box>
+            <Grid container spacing={4} sx={{ marginBottom: '1.5rem' }}>
+              <Grid item xs={6} sx={{ textAlign: 'right' }}>
+                <Button variant="outlined" onClick={resetSearch}>
+                  Clear Search
+                </Button>
+              </Grid>
+              <Grid item xs={6}>
+                <Button variant="contained" type="submit">
+                  Search
+                </Button>
+              </Grid>
+            </Grid>
           </Box>
           {isLoading && (
             <Box sx={{ display: 'flex', position: 'relative', zIndex: '10' }}>
