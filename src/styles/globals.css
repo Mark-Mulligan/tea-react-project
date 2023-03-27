@@ -31,3 +31,15 @@ li {
 .clickable:hover {
   filter: brightness(1.4);
 }
+
+@media (max-width: 900px) {
+  html {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 600px) {
+  html {
+    font-size: 14px;
+  }
+}

@@ -52,14 +52,15 @@ const MoviePage: NextPage<IProps> = ({ movieDetails }) => {
           </Typography>
           <Paper>
             <Grid container>
-              <Grid item md={4} sm={6} xs={12}>
+              <Grid item md={4} sm={5} xs={12} alignItems="center">
                 <img
                   alt={`${movieDetails.Title} box office poster`}
                   src={movieDetails.Poster}
                   style={{ objectFit: 'cover', width: '100%', height: '100%' }}
                 />
               </Grid>
-              <Grid item md={8} sm={6} xs={12} sx={{ padding: '1.5rem' }}>
+
+              <Grid item md={8} sm={7} xs={12} sx={{ padding: '1.5rem' }}>
                 <ul>
                   <li>
                     <Typography variant="h6">Plot</Typography>
