@@ -1,21 +1,21 @@
 ## MVP Branch
 
 The goal of this branch was to get this project working as soon as possible. The idea was to complete the minimal viable product, so that if given a tight deadline,
-I could finish the items nessary to complete the project based on the description.
+I could finish the items necessary to complete the project based on the description.
 
 ### Planning
 
 First, I read through the requirements for the project on github ([requirements](https://github.com/callemall/tea-react-challenge)). After reading through the requirements,
-I thought over how I should implement this project and what technolgies should I use. Here are some of the different items I thought about
+I thought over how I should implement this project and what technologies should I use. Here are some of the different items I thought about
 
 #### API Key
 
 Since there was an api key, I did not want to expose this to the client. To accomplish this, I knew would need to have a server for the project.
-I could either do a standalone express server or use Next.js. I decided to go with Next.js for the ease of developement along with the server side rendering option for SEO purposes.
+I could either do a standalone express server or use Next.js. I decided to go with Next.js for the ease of development along with the server side rendering option for SEO purposes.
 
 #### SEO
 
-Since this project is open to the internet, I wanted to provide at least the oppurtunity to have good SEO on the web page. This eleminated the possiblity of using just a standard client side
+Since this project is open to the internet, I wanted to provide at least the opportunity to have good SEO on the web page. This eliminated the possibility of using just a standard client side
 only react app. I used Next.js to accomplish this.
 
 #### Styling

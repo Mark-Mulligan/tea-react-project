@@ -6,10 +6,10 @@ the search results that they just did.
 
 ### Implementation
 
-I ended up using the next router object to add query params to the url. I also had to track these params and make sure they were insync with the state of the inputs on first load.
+I ended up using the next router object to add query params to the url. I also had to track these params and make sure they were synced with the state of the inputs on first load.
 This allow me to maintain the search params when the page was reloaded or the user navigated back to the movies search page after doing a search.
 
-I used the javascript URL class to work with and minuplate the url string for all of the search criteria.
+I used the javascript URL class to work with and manipulate the url string for all of the search criteria.
 
 ### Other changes
 
