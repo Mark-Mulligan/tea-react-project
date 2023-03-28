@@ -7,6 +7,9 @@ import axios from 'axios';
 // types
 import { OMDBSearchResponse } from '@/customTypes/omdbApi';
 
+// utils
+import { createOMDBSearchURLObject } from '@/utils/api';
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'GET') {
     res.status(401).json({ message: 'Invalid request.' });
@@ -15,23 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   if (req.method === 'GET') {
     if (req.query) {
-      const url = new URL(process.env.OMDB_URL || '');
-
-      if (req.query.q && typeof req.query.q === 'string') {
-        url.searchParams.set('s', req.query.q);
-      }
-
-      if (req.query.type && typeof req.query.type === 'string') {
-        url.searchParams.set('type', req.query.type);
-      }
-
-      if (req.query.y && typeof req.query.y === 'string') {
-        url.searchParams.set('y', req.query.y);
-      }
-
-      if (req.query.page && typeof req.query.page === 'string') {
-        url.searchParams.set('page', req.query.page);
-      }
+      const url = createOMDBSearchURLObject(req, 'req');
 
       if (url.search) {
         url.searchParams.set('apikey', process.env.OMDB_APIKEY || '');

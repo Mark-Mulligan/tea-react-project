@@ -8,7 +8,10 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 
 // Types
-import { OMDBMovieSearchData, type OMDBSearchResponse } from '../customTypes/omdbApi';
+import { OMDBMovieSearchData, type OMDBSearchResponse, type OMDBErrorResponse } from '../customTypes/omdbApi';
+
+// Utils
+import { createOMDBSearchURLObject } from '@/utils/api';
 
 interface IProps {
   nextPage: string;
@@ -28,11 +31,6 @@ const InfinateScroll: FC<IProps> = ({ nextPage, searchResults, setSearchResults,
     const observer = new IntersectionObserver((entries) => {
       if (entries[0].intersectionRatio > 0 || entries[0].intersectionRatio < 0) {
         setIsVisible(true);
-
-        // This removes the event listener
-        // if (domRef.current) {
-        //   observer.unobserve(domRef.current);
-        // }
       } else {
         setIsVisible(false);
       }
@@ -55,9 +53,15 @@ const InfinateScroll: FC<IProps> = ({ nextPage, searchResults, setSearchResults,
     if (isVisible) {
       const getMovieSearch = async (searchString: string) => {
         try {
-          const { data } = await axios.get<{ results: OMDBSearchResponse; nextPage: string }>(
+          const { data } = await axios.get<{ results: OMDBSearchResponse | OMDBErrorResponse; nextPage: string }>(
             `/api/movies/search${searchString}`,
           );
+
+          // Handles error response from api.
+          if (data.results.Response === 'False') {
+            return;
+          }
+
           setSearchResults([...searchResults, ...data.results.Search]);
           setNextPage(data.nextPage);
         } catch (err) {
@@ -66,30 +70,13 @@ const InfinateScroll: FC<IProps> = ({ nextPage, searchResults, setSearchResults,
       };
 
       if (router.query) {
-        let url = new URL('/api/movies/search', process.env.NEXT_PUBLIC_BASE_URL);
-
-        if (router.query.q && typeof router.query.q === 'string') {
-          url.searchParams.set('q', router.query.q);
-        }
-
-        if (router.query.type && typeof router.query.type === 'string') {
-          url.searchParams.set('type', router.query.type);
-        }
-
-        if (router.query.y && typeof router.query.y === 'string') {
-          url.searchParams.set('y', router.query.y);
-        }
-
-        if (router.query.page && typeof router.query.page === 'string') {
-          url.searchParams.set('page', nextPage);
-        }
+        const url = createOMDBSearchURLObject(router, 'router', nextPage);
 
         if (url.search) {
           getMovieSearch(url.search);
         }
       }
     }
-    console.log('isVisible', isVisible);
   }, [isVisible]);
 
   return <div ref={domRef} />;

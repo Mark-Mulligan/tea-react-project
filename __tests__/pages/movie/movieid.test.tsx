@@ -38,7 +38,7 @@ const exampleMovieDetails = {
   BoxOffice: '$206,863,479',
   Production: 'N/A',
   Website: 'N/A',
-  Response: 'True' as 'True' | 'False',
+  Response: 'True' as 'True',
 };
 
 describe('Movie Id Page Data Tests', () => {

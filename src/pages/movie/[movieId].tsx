@@ -20,7 +20,7 @@ import Grid from '@mui/material/Grid';
 import DotList from '../../componets/DotList';
 
 // types
-import { type MovieDetails } from '@/customTypes/omdbApi';
+import { type MovieDetails, type OMDBErrorResponse } from '@/customTypes/omdbApi';
 
 // utils
 import { formatDate } from '../../utils/movieIdPage';
@@ -156,7 +156,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   }
 
   try {
-    const { data } = await axios.get<MovieDetails>(
+    const { data } = await axios.get<MovieDetails | OMDBErrorResponse>(
       `${process.env.OMDB_URL}?i=${movieId}&plot=full&apikey=${process.env.OMDB_APIKEY}`,
     );
 

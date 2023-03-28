@@ -32,6 +32,7 @@ import MediaCard from '@/componets/MediaCard';
 
 // utils
 import { yearSelectOptions } from '../utils/mediaSearch';
+import { createOMDBSearchURLObject } from '@/utils/api';
 
 export default function Home() {
   const router = useRouter();
@@ -59,8 +60,8 @@ export default function Home() {
   };
 
   const setDefaultValuesOnQuery = () => {
-    if (router.query.q && typeof router.query.q === 'string') {
-      setSearchText(router.query.q);
+    if (router.query.s && typeof router.query.s === 'string') {
+      setSearchText(router.query.s);
     }
 
     if (router.query.type && typeof router.query.type === 'string') {
@@ -76,10 +77,10 @@ export default function Home() {
     e.preventDefault();
 
     if (searchText || mediaType !== 'any' || releaseYear) {
-      const queryObject: { q?: string; type?: string; y?: string; page: string } = { page: '1' };
+      const queryObject: { s?: string; type?: string; y?: string; page: string } = { page: '1' };
 
       if (searchText) {
-        queryObject.q = searchText;
+        queryObject.s = searchText;
       }
 
       if (mediaType && mediaType !== 'any') {
@@ -128,23 +129,7 @@ export default function Home() {
     setDefaultValuesOnQuery();
 
     if (router.query) {
-      let url = new URL('/api/movies/search', process.env.NEXT_PUBLIC_BASE_URL);
-
-      if (router.query.q && typeof router.query.q === 'string') {
-        url.searchParams.set('q', router.query.q);
-      }
-
-      if (router.query.type && typeof router.query.type === 'string') {
-        url.searchParams.set('type', router.query.type);
-      }
-
-      if (router.query.y && typeof router.query.y === 'string') {
-        url.searchParams.set('y', router.query.y);
-      }
-
-      if (router.query.page && typeof router.query.page === 'string') {
-        url.searchParams.set('page', router.query.page);
-      }
+      const url = createOMDBSearchURLObject(router, 'router');
 
       if (url.search) {
         getMovieSearch(url.search);

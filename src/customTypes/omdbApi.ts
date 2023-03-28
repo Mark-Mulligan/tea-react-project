@@ -38,5 +38,10 @@ export interface MovieDetails {
   BoxOffice: string; // $206,863,479
   Production: string; // N/A
   Website: string; // N/A
-  Response: 'True' | 'False';
+  Response: 'True';
+}
+
+export interface OMDBErrorResponse {
+  Response: 'False';
+  Error: string;
 }
