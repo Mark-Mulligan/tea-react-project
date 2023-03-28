@@ -16,11 +16,11 @@
 
 ## Approach
 
-I decided to approach this challenge through itertations. These iterations can be seen in the branches that are included in the repo. I also have details about each branch and iteration in the the /docs directory if you would like to learn more.
+I decided to approach this challenge through iterations. These iterations can be seen in the branches that are included in the repo. I also have details about each branch and iteration in the the /docs directory if you would like to learn more.
 
-I took this approach so that at each stage of the process I would have a working solution. I think it's imporant in software developement to always start with working parts. That way, if timelines get moved up, you can deliver working solutions at any given time. It also gives you more time to work on extra features since you have already completed the mvp for the project.
+I took this approach so that at each stage of the process I would have a working solution. I think it's important in software development to always start with working parts. That way, if timelines get moved up, you can deliver working solutions at any given time. It also gives you more time to work on extra features since you have already completed the mvp for the project.
 
-Here are the branches listed in order of developement.
+Here are the branches listed in order of development.
 
 1. mvp
 2. improved-search
