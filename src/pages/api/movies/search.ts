@@ -1,35 +1,33 @@
 // Next
-import type { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 // axios
-import axios from "axios";
+import axios from 'axios';
 
 // types
-import { OMDBSearchResponse } from "@/customTypes/omdbApi";
+import { OMDBSearchResponse } from '@/customTypes/omdbApi';
 
 // utils
-import { createOMDBSearchURLObject } from "@/utils/api";
+import { createOMDBSearchURLObject } from '@/utils/api';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== "GET") {
-    res.status(401).json({ message: "Invalid request." });
+  if (req.method !== 'GET') {
+    res.status(401).json({ message: 'Invalid request.' });
     return;
   }
 
-  if (req.method === "GET") {
-    console.log("request query", req.query);
-
+  if (req.method === 'GET') {
     if (req.query) {
-      const url = createOMDBSearchURLObject(req, "req");
+      const url = createOMDBSearchURLObject(req, 'req');
 
       if (url.search) {
-        url.searchParams.set("apikey", process.env.OMDB_APIKEY || "");
+        url.searchParams.set('apikey', process.env.OMDB_APIKEY || '');
 
         try {
           const { data } = await axios.get<OMDBSearchResponse>(url.href);
           const currentPage = Number(req.query.page);
           const totalResults = Number(data.totalResults);
-          let nextPage = "";
+          let nextPage = '';
 
           if (currentPage * 10 < totalResults) {
             nextPage = (currentPage + 1).toString();
@@ -39,15 +37,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           return;
         } catch (err) {
           console.log(err);
-          res.status(500).json({ message: "Unabled to search movies" });
+          res.status(500).json({ message: 'Unabled to search movies' });
           return;
         }
       }
 
-      res.status(401).json({ message: "Request missing search params" });
+      res.status(401).json({ message: 'Request missing search params' });
       return;
     }
 
-    res.status(401).json({ message: "Invalid request." });
+    res.status(401).json({ message: 'Invalid request.' });
   }
 }

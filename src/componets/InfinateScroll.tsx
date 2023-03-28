@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // React
 import { useEffect, useRef, useState, type FC, type Dispatch, type SetStateAction } from 'react';
 
