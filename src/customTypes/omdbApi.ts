@@ -29,7 +29,7 @@ export interface MovieDetails {
   Rated: string;
   Ratings: { Source: string; Value: string }[];
   Released: string;
-  MetaScore: string;
+  Metascore: string;
   imdbRating: string;
   imdbVotes: string;
   imdbID: string;
