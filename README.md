@@ -13,6 +13,7 @@
 - Infinite Scrolling through pagination on the Search screen
 - Custom MUI theme changes
 - Next.js pages and query strings
+- Testing with Jest and Testing
 
 ## Approach
 
@@ -58,7 +59,8 @@ If all the steps above were followed correctly, you should have a working versio
 
 ## Testing
 
-There are a series of unit and integration tests featured to check the functionality of the application. These tests are located in the **tests** directory. Note that some tests will need to use environment variables, so you will need to add a .env file (separate from the .env.local file though you can copy the contents from the .env.local file directly).
+There are a series of unit and integration tests featured to check the functionality of the application. These tests are located in the **tests** directory.
+
 To run all tests, run the following command:
 
 ```bash
