@@ -84,14 +84,25 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Container sx={{ paddingTop: '2em', paddingBottom: '2rem' }}>
+        <Container sx={{ paddingTop: '2em', paddingBottom: '2rem', minHeight: '100vh' }}>
           <Typography variant="h1" align="center" sx={{ fontSize: '3rem', marginBottom: '1.5rem' }}>
             Search Movies
           </Typography>
           <MovieSearch setSearchResultCount={setSearchResultCount} setSearchResults={setSearchResults} />
           {isLoading && (
             <Box sx={{ display: 'flex', position: 'relative', zIndex: '10' }}>
-              <CircularProgress sx={{ position: 'absolute', left: 'calc(50% - 25px)' }} />
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  position: 'absolute',
+                  left: 'calc(50% - 40px)',
+                  top: '40px',
+                }}
+              >
+                <CircularProgress size={80} />
+              </Box>
             </Box>
           )}
           {noResultsText && <Typography textAlign="center">{noResultsText}</Typography>}
