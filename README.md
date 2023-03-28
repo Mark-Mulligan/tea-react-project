@@ -13,7 +13,7 @@
 - Infinite Scrolling through pagination on the Search screen
 - Custom MUI theme changes
 - Next.js pages and query strings
-- Testing with Jest and Testing
+- Testing with Jest and Testing Library/React
 
 ## Approach
 
