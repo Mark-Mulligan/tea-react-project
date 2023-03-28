@@ -12,104 +12,44 @@ import axios from 'axios';
 // MUI
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import Autocomplete from '@mui/material/Autocomplete';
 import CircularProgress from '@mui/material/CircularProgress';
 
 // Types
-import { type OMDBSearchResponse, type OMDBMovieSearchData } from '../customTypes/omdbApi';
+import { type OMDBSearchResponse, type OMDBMovieSearchData, type OMDBErrorResponse } from '../customTypes/omdbApi';
 
 // Components
+import MovieSearch from '@/componets/MovieSearch';
 import InfinateScroll from '@/componets/InfinateScroll';
 import MediaCard from '@/componets/MediaCard';
 
 // utils
-import { yearSelectOptions } from '../utils/mediaSearch';
 import { createOMDBSearchURLObject } from '@/utils/api';
 
 export default function Home() {
   const router = useRouter();
 
-  const [searchText, setSearchText] = useState((router?.query?.q as string) || '');
-  const [mediaType, setMediaType] = useState((router?.query?.type as string) || 'any');
-  const [releaseYear, setReleaseYear] = useState<string | null>(null);
   const [searchResultCount, setSearchResultCount] = useState(0);
   const [nextPage, setNextPage] = useState('');
   const [noResultsText, setNoResultsText] = useState('');
   const [searchResults, setSearchResults] = useState<OMDBMovieSearchData[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const resetSearch = async () => {
-    setSearchText('');
-    setMediaType('any');
-    setReleaseYear(null);
-    setSearchResultCount(0);
-    setSearchResults([]);
-    await router.push({ pathname: '/', query: {} }, undefined);
-  };
-
-  const handleMediaTypeChange = (event: SelectChangeEvent) => {
-    setMediaType(event.target.value);
-  };
-
-  const setDefaultValuesOnQuery = () => {
-    if (router.query.s && typeof router.query.s === 'string') {
-      setSearchText(router.query.s);
-    }
-
-    if (router.query.type && typeof router.query.type === 'string') {
-      setMediaType(router.query.type);
-    }
-
-    if (router.query.y && typeof router.query.y === 'string') {
-      setReleaseYear(router.query.y);
-    }
-  };
-
-  const handleSearchSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-
-    if (searchText || mediaType !== 'any' || releaseYear) {
-      const queryObject: { s?: string; type?: string; y?: string; page: string } = { page: '1' };
-
-      if (searchText) {
-        queryObject.s = searchText;
-      }
-
-      if (mediaType && mediaType !== 'any') {
-        queryObject.type = mediaType;
-      }
-
-      if (releaseYear) {
-        queryObject.y = releaseYear;
-      }
-
-      await router.push({ pathname: '/', query: queryObject }, undefined);
-    }
-  };
-
   useEffect(() => {
     const getMovieSearch = async (searchString: string) => {
       try {
         setIsLoading(true);
-        const { data } = await axios.get<{ results: OMDBSearchResponse; nextPage: string }>(
+        const { data } = await axios.get<{ results: OMDBSearchResponse | OMDBErrorResponse; nextPage: string }>(
           `/api/movies/search${searchString}`,
         );
 
-        // This is for when no results are returned in a users search.
+        // This is for when no results are returned in a users search (OMDBErrorResponse).
         if (data.results.Response === 'False') {
           setSearchResults([]);
           setSearchResultCount(0);
           setNextPage('');
           setNoResultsText(data.results.Error);
-          console.log('this ran');
         } else {
           setSearchResultCount(Number(data.results.totalResults));
           setSearchResults(data.results.Search);
@@ -126,8 +66,6 @@ export default function Home() {
       setIsLoading(false);
     };
 
-    setDefaultValuesOnQuery();
-
     if (router.query) {
       const url = createOMDBSearchURLObject(router, 'router');
 
@@ -141,7 +79,7 @@ export default function Home() {
     <>
       <Head>
         <title>OMDB - Online Movie Database</title>
-        <meta name="description" content="Search for movies, tv-shows, series and more." />
+        <meta name="description" content="Search for movies, tv-shows, series and more using the OMDB Database." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -150,63 +88,7 @@ export default function Home() {
           <Typography variant="h1" align="center" sx={{ fontSize: '3rem', marginBottom: '1.5rem' }}>
             Search Movies
           </Typography>
-          <Box component="form" onSubmit={handleSearchSubmit}>
-            <Grid container spacing={4} sx={{ marginBottom: '1.5rem' }}>
-              <Grid item md={4} xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  value={searchText}
-                  onChange={(e) => setSearchText(e.target.value)}
-                  label="Search Titles"
-                />
-              </Grid>
-              <Grid item md={4} sm={6} xs={12}>
-                <FormControl fullWidth>
-                  <InputLabel id="media-type-select-label">Media Type</InputLabel>
-                  <Select
-                    labelId="media-type-select-label"
-                    id="media-type-select"
-                    value={mediaType}
-                    label="Media Type"
-                    onChange={handleMediaTypeChange}
-                  >
-                    <MenuItem value="any">Any</MenuItem>
-                    <MenuItem value="movie">Movie</MenuItem>
-                    <MenuItem value="series">Series</MenuItem>
-                    <MenuItem value="episode">Episode</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item md={4} sm={6} xs={12}>
-                <Autocomplete
-                  id="yearSelect"
-                  fullWidth
-                  options={yearSelectOptions()}
-                  value={releaseYear}
-                  onChange={(event: any, newValue: string | null) => {
-                    setReleaseYear(newValue);
-                  }}
-                  autoHighlight
-                  getOptionLabel={(option) => option}
-                  renderInput={(params) => <TextField {...params} label="Year" />}
-                />
-              </Grid>
-            </Grid>
-
-            <Grid container spacing={4} sx={{ marginBottom: '1.5rem' }}>
-              <Grid item xs={6} sx={{ textAlign: 'right' }}>
-                <Button variant="outlined" onClick={resetSearch}>
-                  Clear Search
-                </Button>
-              </Grid>
-              <Grid item xs={6}>
-                <Button variant="contained" type="submit">
-                  Search
-                </Button>
-              </Grid>
-            </Grid>
-          </Box>
+          <MovieSearch setSearchResultCount={setSearchResultCount} setSearchResults={setSearchResults} />
           {isLoading && (
             <Box sx={{ display: 'flex', position: 'relative', zIndex: '10' }}>
               <CircularProgress sx={{ position: 'absolute', left: 'calc(50% - 25px)' }} />

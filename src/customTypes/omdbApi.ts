@@ -9,8 +9,7 @@ export interface OMDBMovieSearchData {
 export interface OMDBSearchResponse {
   Search: OMDBMovieSearchData[];
   totalResults: string; // number as a string;
-  Response: 'True' | 'False';
-  Error: string;
+  Response: 'True';
 }
 
 export interface MovieDetails {
