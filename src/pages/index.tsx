@@ -35,6 +35,7 @@ import { createOMDBSearchURLObject } from '@/utils/api';
 
 export default function Home() {
   const router = useRouter();
+
   const {
     searchResults,
     setSearchResults,
