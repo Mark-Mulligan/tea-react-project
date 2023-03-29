@@ -111,7 +111,6 @@ const MovieSearch: FC<IProps> = ({ setSearchResultCount, setSearchResults }) => 
               <MenuItem value="any">Any</MenuItem>
               <MenuItem value="movie">Movie</MenuItem>
               <MenuItem value="series">Series</MenuItem>
-              <MenuItem value="episode">Episode</MenuItem>
             </Select>
           </FormControl>
         </Grid>

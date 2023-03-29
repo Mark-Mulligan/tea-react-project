@@ -40,6 +40,22 @@ export interface MovieDetails {
   Response: 'True';
 }
 
+export interface EpisodeOverview {
+  Title: string;
+  Released: string; // ex 2011-04-17;
+  Episode: string; // ex 1;
+  imdbRating: string;
+  imdbId: string;
+}
+
+export interface SeriesData {
+  Title: string;
+  Season: string;
+  totalSeasons: string;
+  Episodes: EpisodeOverview[];
+  Response: 'True';
+}
+
 export interface OMDBErrorResponse {
   Response: 'False';
   Error: string;

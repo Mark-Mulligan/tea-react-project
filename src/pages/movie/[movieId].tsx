@@ -15,21 +15,26 @@ import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 // components
 import DotList from '../../componets/DotList';
 
 // types
-import { type MovieDetails, type OMDBErrorResponse } from '@/customTypes/omdbApi';
+import { type MovieDetails, type OMDBErrorResponse, type SeriesData } from '@/customTypes/omdbApi';
 
 // utils
 import { formatDate } from '../../utils/movieIdPage';
 
 interface IProps {
   movieDetails: MovieDetails;
+  seriesData: SeriesData | null;
 }
 
-const MoviePage: NextPage<IProps> = ({ movieDetails }) => {
+const MoviePage: NextPage<IProps> = ({ movieDetails, seriesData }) => {
   // Needed to added the ? marks to handle 404 cases where the movieDetails are not found
   const movieGenres = movieDetails?.Genre?.split(',') || [];
   const movieWriters = movieDetails?.Writer?.split(',') || [];
@@ -38,6 +43,12 @@ const MoviePage: NextPage<IProps> = ({ movieDetails }) => {
 
   if (!movieDetails) {
     return <div>Not found</div>;
+  }
+
+  console.log('series', seriesData);
+
+  if (seriesData) {
+    console.log(Array(Number(seriesData.totalSeasons)).fill(0));
   }
 
   return (
@@ -107,7 +118,7 @@ const MoviePage: NextPage<IProps> = ({ movieDetails }) => {
             </Grid>
           </Paper>
 
-          <Paper sx={{ padding: '1.5rem' }}>
+          <Paper sx={{ padding: '1.5rem', marginBottom: '2rem' }}>
             <Typography variant="h2" textAlign="center" sx={{ fontSize: '2.2rem', marginBottom: '1.5rem' }}>
               Additional Info
             </Typography>
@@ -144,6 +155,35 @@ const MoviePage: NextPage<IProps> = ({ movieDetails }) => {
               </Grid>
             </Grid>
           </Paper>
+
+          {seriesData && (
+            <Paper sx={{ padding: '1.5rem' }}>
+              <Typography variant="h2" textAlign="center" sx={{ fontSize: '2.2rem', marginBottom: '1.5rem' }}>
+                Seasons
+              </Typography>
+              {Array(Number(seriesData?.totalSeasons))
+                .fill(0)
+                .map((item, index) => {
+                  return (
+                    <Accordion key={`season-${index}`} sx={{ background: 'rgba(14, 24, 37)' }}>
+                      <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="panel1a-content"
+                        id="panel1a-header"
+                      >
+                        <Typography>Season {index + 1}</Typography>
+                      </AccordionSummary>
+                      <AccordionDetails>
+                        <Typography>
+                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit
+                          amet blandit leo lobortis eget.
+                        </Typography>
+                      </AccordionDetails>
+                    </Accordion>
+                  );
+                })}
+            </Paper>
+          )}
         </Container>
       </main>
     </>
@@ -170,9 +210,23 @@ export const getStaticProps: GetStaticProps = async (context) => {
       };
     }
 
+    let seriesData: SeriesData | null = null;
+
+    if (data.Type === 'series') {
+      const { data } = await axios.get<SeriesData | OMDBErrorResponse>(
+        `${process.env.OMDB_URL}?i=${movieId}&Season=1&apikey=${process.env.OMDB_APIKEY}`,
+      );
+
+      if (data.Response === 'True') {
+        seriesData = data;
+      }
+    }
+
     return {
       props: {
+        mediaType: data.Type,
         movieDetails: data,
+        seriesData,
       }, // will be passed to the page component as props
     };
   } catch (err) {
