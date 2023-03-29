@@ -3,7 +3,7 @@ import { formatDate } from '@/utils/movieIdPage';
 
 describe('Movie Id page Tests', () => {
   test.each([
-    { inputDate: '02 Jan 1991', expected: 'January 02, 1991' },
+    { inputDate: '02 Jan 1991', expected: 'January 02, 1990' },
     { inputDate: '10 Feb 1950', expected: 'Feburary 10, 1950' },
     { inputDate: '25 Mar 2020', expected: 'March 25, 2020' },
     { inputDate: '11 Apr 1972', expected: 'April 11, 1972' },
