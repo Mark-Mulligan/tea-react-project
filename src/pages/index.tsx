@@ -20,7 +20,7 @@ import Grid from '@mui/material/Grid';
 import CircularProgress from '@mui/material/CircularProgress';
 
 // Types
-import { type OMDBSearchResponse, type OMDBMovieSearchData, type OMDBErrorResponse } from '../customTypes/omdbApi';
+import { type OMDBSearchResponse, type OMDBErrorResponse } from '../customTypes/omdbApi';
 
 // Components
 import MovieSearch from '@/componets/MovieSearch';
