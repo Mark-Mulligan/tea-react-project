@@ -2,7 +2,7 @@ interface MonthsHash {
   Jan: 'January';
   Feb: 'Feburary';
   Mar: 'March';
-  Apr: 'Apr';
+  Apr: 'April';
   May: 'May';
   Jun: 'June';
   Jul: 'July';
@@ -18,7 +18,7 @@ const monthConverter = (monthAbreviation: keyof MonthsHash) => {
     Jan: 'January',
     Feb: 'Feburary',
     Mar: 'March',
-    Apr: 'Apr',
+    Apr: 'April',
     May: 'May',
     Jun: 'June',
     Jul: 'July',
