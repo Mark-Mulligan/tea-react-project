@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // React
-import { useState, type FormEvent, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 
 // Next
 import Head from 'next/head';
@@ -8,6 +8,9 @@ import { useRouter } from 'next/router';
 
 // axios
 import axios from 'axios';
+
+// react-scroll
+import { scroller } from 'react-scroll';
 
 // MUI
 import Container from '@mui/material/Container';
@@ -24,25 +27,45 @@ import MovieSearch from '@/componets/MovieSearch';
 import InfinateScroll from '@/componets/InfinateScroll';
 import MediaCard from '@/componets/MediaCard';
 
+// Context
+import { AppContext } from '@/context/AppContext';
+
 // utils
 import { createOMDBSearchURLObject } from '@/utils/api';
 
 export default function Home() {
   const router = useRouter();
+  const {
+    searchResults,
+    setSearchResults,
+    nextPage,
+    setNextPage,
+    searchResultCount,
+    setSearchResultCount,
+    previousSearchString,
+    setPreviousSearchString,
+    selectedMediaId,
+    setSelectedMediaId,
+  } = useContext(AppContext);
 
-  const [searchResultCount, setSearchResultCount] = useState(0);
-  const [nextPage, setNextPage] = useState('');
   const [noResultsText, setNoResultsText] = useState('');
-  const [searchResults, setSearchResults] = useState<OMDBMovieSearchData[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const getMovieSearch = async (searchString: string) => {
+      // Data is already loaded so no need to fetch again
+      if (previousSearchString === searchString) {
+        return;
+      }
+
       try {
         setIsLoading(true);
+        setSelectedMediaId('');
         const { data } = await axios.get<{ results: OMDBSearchResponse | OMDBErrorResponse; nextPage: string }>(
           `/api/movies/search${searchString}`,
         );
+
+        setPreviousSearchString(searchString);
 
         // This is for when no results are returned in a users search (OMDBErrorResponse).
         if (data.results.Response === 'False') {
@@ -74,6 +97,21 @@ export default function Home() {
       }
     }
   }, [router.query]);
+
+  useEffect(() => {
+    /**
+     * This is used to scroll down to where the user last clicked in the search after navigating to the individual media page. For example,
+     * if they picked a result that was 50 items in, this would keep there place when they return to the search after selecting that item.
+     */
+    if (selectedMediaId) {
+      scroller.scrollTo(selectedMediaId, {
+        duration: 600,
+        delay: 100,
+        smooth: true,
+        offset: -100, // Scrolls to element - 100 pixels up the page
+      });
+    }
+  }, []);
 
   return (
     <>
