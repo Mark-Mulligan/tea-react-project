@@ -11,10 +11,10 @@
 
 - ServerSide Rendering
 - Infinite Scrolling through pagination on the Search screen
+- Global State management with react context
 - Next.js pages and query strings
 - Custom MUI theme changes
 - Light and Dark Modes
-- Global State with react Context
 - Testing with Jest and Testing Library/React
 
 ## Approach

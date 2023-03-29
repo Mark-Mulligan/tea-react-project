@@ -13,7 +13,7 @@ import { styled } from '@mui/material/styles';
 import Switch from '@mui/material/Switch';
 
 // Context
-import { DarkModeContext } from '../context/darkModeContext';
+import { AppContext } from '../context/AppContext';
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 62,
@@ -63,7 +63,7 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 }));
 
 const Navbar = () => {
-  const { darkMode, setDarkMode } = useContext(DarkModeContext);
+  const { darkMode, setDarkMode } = useContext(AppContext);
 
   return (
     <Box sx={{ flexGrow: 1 }}>

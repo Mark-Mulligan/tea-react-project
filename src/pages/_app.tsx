@@ -20,7 +20,10 @@ import lightThemeOptions from '../styles/theme/lightThemeOptions';
 import Navbar from '../componets/Navbar';
 
 // Context
-import { DarkModeContext } from '@/context/darkModeContext';
+import { AppContext } from '@/context/AppContext';
+
+// Types
+import { OMDBMovieSearchData } from '@/customTypes/omdbApi';
 
 // Styles
 import '../styles/globals.css';
@@ -37,6 +40,11 @@ const lightTheme = createTheme(lightThemeOptions);
 const MyApp: React.FunctionComponent<MyAppProps> = (props) => {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
   const [darkMode, setDarkMode] = useState(true);
+  const [searchResults, setSearchResults] = useState<OMDBMovieSearchData[]>([]);
+  const [nextPage, setNextPage] = useState('');
+  const [selectedMediaId, setSelectedMediaId] = useState('');
+  const [searchResultCount, setSearchResultCount] = useState(0);
+  const [previousSearchString, setPreviousSearchString] = useState('');
 
   useEffect(function () {
     if (typeof window !== 'undefined') {
@@ -50,13 +58,28 @@ const MyApp: React.FunctionComponent<MyAppProps> = (props) => {
 
   return (
     <CacheProvider value={emotionCache}>
-      <DarkModeContext.Provider value={{ darkMode, setDarkMode }}>
+      <AppContext.Provider
+        value={{
+          darkMode,
+          setDarkMode,
+          searchResults,
+          setSearchResults,
+          nextPage,
+          setNextPage,
+          selectedMediaId,
+          setSelectedMediaId,
+          searchResultCount,
+          setSearchResultCount,
+          previousSearchString,
+          setPreviousSearchString,
+        }}
+      >
         <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
           <CssBaseline />
           <Navbar />
           <Component {...pageProps} />
         </ThemeProvider>
-      </DarkModeContext.Provider>
+      </AppContext.Provider>
     </CacheProvider>
   );
 };
