@@ -12,6 +12,7 @@
 ## Features
 
 - ServerSide Rendering
+- Mobile Responsive
 - Infinite Scrolling through pagination on the Search screen
 - Global State management with react context
 - Next.js pages and query strings
@@ -38,7 +39,7 @@ Here are the branches listed in order of development.
 4. testing-and-refactor
 5. light-and-dark-mode
 
-You can read more details on what I changed in each branch in the docs folder.
+You can read more details on what I was think about and changed with each branch in the docs folder.
 
 ## Run/Develope Locally
 
@@ -81,6 +82,22 @@ npm run test
 ```
 
 You can also run individual tests suites using the jest CLI. More information on that can be found [here](https://jestjs.io/docs/cli). You may need to install this globally if you don't already have it on your machine.
+
+## Build
+
+To create a build locally, run the following command:
+
+```bash
+npm run build
+```
+
+This command will first run the tests in the **tests** folder. If all tests pass, then the a production build of the applicaiton will be generated. The build files will be located in the .next directory.
+
+## My other work
+
+Feel free to check out some of the other things I have been working on.
+
+[Personal Portfolio](https://markmulligan.dev) - Displays my experience and recent projects
 
 ## Learn More About Next
 
