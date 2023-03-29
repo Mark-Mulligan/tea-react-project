@@ -118,8 +118,20 @@ export default function Home() {
     <>
       <Head>
         <title>OMDB - Online Movie Database</title>
-        <meta name="description" content="Search for movies, tv-shows, series and more using the OMDB Database." />
+        <meta
+          name="description"
+          content="Home to data on thousands of movies, tv-shows, series and more, OMDBDatabase allows you to search and filter all of that data to easily find what you are looking for. OMDB also gives you the ability to select individual titles to view more information about them such as the plot, cast, box office earnings and more!"
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta prefix="og: http://ogp.me/ns#" property="og:type" content="website" />
+        <meta name="title" property="og:title" content="OMDB - Online Movie Database" />
+        <meta name="image" property="og:image" content="https://tea-omdb-moviesearch.netlify.app/omdbHomePage.jpg" />
+        <meta name="url" property="og:url" content="https://tea-omdb-moviesearch.netlify.app" />
+        <meta
+          name="description"
+          property="og:description"
+          content="Home to data on thousands of movies, tv-shows, series and more, OMDBDatabase allows you to search and filter all of that data to easily find what you are looking for. OMDB also gives you the ability to select individual titles to view more information about them such as the plot, cast, box office earnings and more!"
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>

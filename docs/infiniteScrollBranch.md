@@ -1,6 +1,6 @@
 ## Infinite Scroll Branch
 
-The goal of this branch was to be able to load more search results as the user scrolls down. This would provided a
+The goal of this branch was to be able to load more search results as the user scrolls down. This would provided a better search experience for the user as they could view as many of the results for each search as they wanted.
 
 ### Implementation
 
@@ -9,8 +9,9 @@ element I was using as the infinite scroll detector, I used the useRef hook. In 
 
 Logic for the infinite scroll feature can be seen in the Infinite Scroll component as well as updates made to the pages/api/movies/search.ts file.
 
-### Other Updates
+### Updates
 
+- Added infinite scrolling capabilities
 - Made app responsive on different screen sizes
 - Added some custom colors via MUI themes
 - Added additional information to the individual media page

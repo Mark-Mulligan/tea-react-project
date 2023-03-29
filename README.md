@@ -1,5 +1,7 @@
 # TEA-React-Project
 
+<img src="./public/omdbHomePage.jpg" alt="Picture of application's home page." width="500px" height="250px">
+
 ## Built With
 
 - Next.js
@@ -14,8 +16,13 @@
 - Global State management with react context
 - Next.js pages and query strings
 - Custom MUI theme changes
-- Light and Dark Modes
+- Light and Dark Modes (persisted with localStorage)
 - Testing with Jest and Testing Library/React
+- CI/CD with Netlify and Github (production builds on pushes to main, builds must pass all tests to be deployed to production)
+
+## Live Link
+
+https://tea-omdb-moviesearch.netlify.app/
 
 ## Approach
 
@@ -28,6 +35,10 @@ Here are the branches listed in order of development.
 1. mvp
 2. improved-search
 3. infinite-scroll
+4. testing-and-refactor
+5. light-and-dark-mode
+
+You can read more details on what I changed in each branch in the docs folder.
 
 ## Run/Develope Locally
 
