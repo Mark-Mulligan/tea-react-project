@@ -4,12 +4,12 @@ const lightThemeOptions: ThemeOptions = {
   palette: {
     mode: 'light',
     primary: {
-      main: 'rgb(29 78 216)',
+      main: 'rgb(29, 78, 216)',
       contrastText: '#fff',
     },
     background: {
-      default: 'rgb(245, 245, 245)',
-      paper: 'rgba(220, 220, 220)',
+      default: 'rgb(230, 230, 230)',
+      paper: 'rgba(200, 200, 200)',
     },
   },
 };
