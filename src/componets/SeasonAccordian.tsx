@@ -8,19 +8,14 @@ import Link from 'next/link';
 import axios from 'axios';
 
 // MUI
-import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
-import Stack from '@mui/material/Stack';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import CardActionArea from '@mui/material/CardActionArea';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -50,7 +45,6 @@ const SeasonAccordian: FC<IProps> = ({ title, seasonNumber, seriesId, episodeDat
     setExpanded(!expanded);
 
     if (!hasFetchedData) {
-      console.log('isFetchingData');
       setIsLoading(true);
 
       try {
@@ -88,7 +82,7 @@ const SeasonAccordian: FC<IProps> = ({ title, seasonNumber, seriesId, episodeDat
               return (
                 <Link
                   key={episode.imdbID}
-                  href={`/movie/${episode.imdbID}`}
+                  href={`/media/${episode.imdbID}`}
                   passHref
                   id={episode.imdbID}
                   style={{ marginRight: '1rem' }}
@@ -118,7 +112,7 @@ const SeasonAccordian: FC<IProps> = ({ title, seasonNumber, seriesId, episodeDat
             return (
               <Link
                 key={episode.imdbID}
-                href={`/movie/${episode.imdbID}`}
+                href={`/media/${episode.imdbID}`}
                 passHref
                 id={episode.imdbID}
                 style={{ marginRight: '1rem' }}

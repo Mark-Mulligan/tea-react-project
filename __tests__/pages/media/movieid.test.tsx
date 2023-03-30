@@ -6,7 +6,7 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 // Application
-import MoviePage from '../../../src/pages/movie/[movieId]';
+import MoviePage from '../../../src/pages/media/[movieId]';
 
 const exampleMovieDetails = {
   Title: 'Batman Begins',

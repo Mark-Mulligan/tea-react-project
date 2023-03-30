@@ -29,7 +29,7 @@ const MediaCard: FC<IProps> = ({ data }) => {
   const { setSelectedMediaId } = useContext(AppContext);
 
   return (
-    <Link href={`/movie/${data.imdbID}`} passHref onClick={() => setSelectedMediaId(data.imdbID)} id={data.imdbID}>
+    <Link href={`/media/${data.imdbID}`} passHref onClick={() => setSelectedMediaId(data.imdbID)} id={data.imdbID}>
       <Element name={data.imdbID} style={{ height: '100%' }}>
         <CardActionArea sx={{ height: '100%' }}>
           <Card sx={{ height: '100%' }}>
