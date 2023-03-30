@@ -135,7 +135,7 @@ export default function Home() {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <main>
-        <Container sx={{ paddingTop: "2em", paddingBottom: "2rem", minHeight: "100vh" }}>
+        <Container sx={{ paddingTop: "2em", paddingBottom: "2rem", minHeight: "80vh" }}>
           <Typography variant='h1' align='center' sx={{ fontSize: "3rem", marginBottom: "1.5rem" }}>
             Search Movies
           </Typography>
