@@ -22,6 +22,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 // components
 import DotList from '../../componets/DotList';
+import SeasonAccordian from '@/componets/SeasonAccordian';
 
 // types
 import { type MovieDetails, type OMDBErrorResponse, type SeriesData } from '@/customTypes/omdbApi';
@@ -164,22 +165,23 @@ const MoviePage: NextPage<IProps> = ({ movieDetails, seriesData }) => {
               {Array(Number(seriesData?.totalSeasons))
                 .fill(0)
                 .map((item, index) => {
+                  if (index === 0) {
+                    return (
+                      <SeasonAccordian
+                        key={`seasion-accordian-${index}`}
+                        title={`Season ${index + 1}`}
+                        seasonNumber={index + 1}
+                        episodeData={seriesData.Episodes}
+                      />
+                    );
+                  }
+
                   return (
-                    <Accordion key={`season-${index}`} sx={{ background: 'rgba(14, 24, 37)' }}>
-                      <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel1a-content"
-                        id="panel1a-header"
-                      >
-                        <Typography>Season {index + 1}</Typography>
-                      </AccordionSummary>
-                      <AccordionDetails>
-                        <Typography>
-                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit
-                          amet blandit leo lobortis eget.
-                        </Typography>
-                      </AccordionDetails>
-                    </Accordion>
+                    <SeasonAccordian
+                      key={`seasion-accordian-${index}`}
+                      title={`Season ${index + 1}`}
+                      seasonNumber={index + 1}
+                    />
                   );
                 })}
             </Paper>

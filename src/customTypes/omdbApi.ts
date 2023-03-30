@@ -45,7 +45,7 @@ export interface EpisodeOverview {
   Released: string; // ex 2011-04-17;
   Episode: string; // ex 1;
   imdbRating: string;
-  imdbId: string;
+  imdbID: string;
 }
 
 export interface SeriesData {
