@@ -103,15 +103,15 @@ This command will first run the tests in the **tests** folder. If all tests pass
 
 On the home page, type a value into the search titles field (this is required) then press search. You can also filter by media type or year if you would like to narrow your search. Click on one of the result cards to view details on the media item you selected.
 
-<img src="./readmeImages/searchExample.png" alt="Picture of application's home page." width="430px" height="250px">
+<img src="./readmeImages/searchExample.png" alt="Picture of application's home page." width="400px" height="250px">
 
 ### Media details
 
 After clicking on an item in the search, the application will take you to details on that individual media item. If the item is a series, there will be additional information at the bottom of this page about the episodes in each season of that series. Click on a season to view the episodes. Clicking on an individual episode will take you to the details page for that episode. If you want to go back after a search, click the back button in the browser.
 
-<img src="./readmeImages/mediaExample.png" alt="Picture of application's home page." width="430px" height="250px">
+<img src="./readmeImages/mediaExample.png" alt="Picture of application's home page." width="400px" height="250px">
 
-<img src="./readmeImages/seasonsExample.png" alt="Picture of application's home page." width="430px" height="250px">
+<img src="./readmeImages/seasonsExample.png" alt="Picture of application's home page." width="400px" height="250px">
 
 ## My other work
 
