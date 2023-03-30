@@ -32,7 +32,7 @@ li {
   filter: brightness(1.4);
 }
 
-@media (max-width: 900px) {
+/* @media (max-width: 900px) {
   html {
     font-size: 15px;
   }
@@ -42,4 +42,4 @@ li {
   html {
     font-size: 14px;
   }
-}
+} */
