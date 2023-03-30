@@ -41,6 +41,7 @@ Here are the branches listed in order of development.
 3. infinite-scroll
 4. testing-and-refactor
 5. light-and-dark-mode
+6. series-and-episode-fix
 
 You can read more details on what I was think about and changed with each branch in the docs folder.
 
