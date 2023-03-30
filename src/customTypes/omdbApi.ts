@@ -2,14 +2,14 @@ export interface OMDBMovieSearchData {
   Title: string;
   Year: string;
   imdbID: string;
-  Type: 'movie' | 'series' | 'episode';
+  Type: "movie" | "series" | "episode";
   Poster: string;
 }
 
 export interface OMDBSearchResponse {
   Search: OMDBMovieSearchData[];
   totalResults: string; // number as a string;
-  Response: 'True';
+  Response: "True";
 }
 
 export interface MovieDetails {
@@ -32,12 +32,12 @@ export interface MovieDetails {
   imdbRating: string;
   imdbVotes: string;
   imdbID: string;
-  Type: 'movie' | 'series' | 'episode';
-  DVD: string;
-  BoxOffice: string; // $206,863,479
-  Production: string; // N/A
-  Website: string; // N/A
-  Response: 'True';
+  Type: "movie" | "series" | "episode";
+  DVD?: string;
+  BoxOffice?: string; // $206,863,479
+  Production?: string; // N/A
+  Website?: string; // N/A
+  Response: "True";
 }
 
 export interface EpisodeOverview {
@@ -53,10 +53,10 @@ export interface SeriesData {
   Season: string;
   totalSeasons: string;
   Episodes: EpisodeOverview[];
-  Response: 'True';
+  Response: "True";
 }
 
 export interface OMDBErrorResponse {
-  Response: 'False';
+  Response: "False";
   Error: string;
 }

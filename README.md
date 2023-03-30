@@ -11,6 +11,9 @@
 
 ## Features
 
+- Query Movies, Series, and Games
+- View Individual Details on results by clicking on a result
+- Series Details includes season with episodes that can also be viewed
 - ServerSide Rendering
 - Mobile Responsive
 - Infinite Scrolling through pagination on the Search screen
@@ -49,7 +52,7 @@ You can read more details on what I was think about and changed with each branch
 git clone https://github.com/Mark-Mulligan/tea-react-project.git
 ```
 
-2. Next, make sure to install all the app dependencies using a node package manager
+2. Inside the cloned repo, install all the app dependencies using a node package manager
 
 ```bash
 npm install
@@ -91,11 +94,27 @@ To create a build locally, run the following command:
 npm run build
 ```
 
-This command will first run the tests in the **tests** folder. If all tests pass, then the a production build of the applicaiton will be generated. The build files will be located in the .next directory.
+This command will first run the tests in the **tests** folder. If all tests pass, then the a production build of the application will be generated. The build files will be located in the .next directory.
+
+## Using the App
+
+### Media Search
+
+On the home page, type a value into the search titles field (this is required) then press search. You can also filter by media type or year if you would like to narrow your search. Click on one of the result cards to view details on the media item you selected.
+
+<img src="./readmeImages/searchExample.png" alt="Picture of application's home page." width="500px" height="250px">
+
+### Media details
+
+After clicking on an item in the search, the application will take you to details on that individual media item. If the item is a series, there will be additional information at the bottom of this page about the episodes in each season of that series. Click on a season to view the episodes. Clicking on an individual episode will take you to the details page for that episode. If you want to go back after a search, click the back button in the browser.
+
+<img src="./readmeImages/mediaExample.png" alt="Picture of application's home page." width="500px" height="250px">
+
+<img src="./readmeImages/seasonsExample.png" alt="Picture of application's home page." width="500px" height="250px">
 
 ## My other work
 
-Feel free to check out some of the other things I have been working on.
+Feel free to check out some of the other things I have been working on. My portfolio includes some of my latests projects. I am always try to learn new things and keep my skills up to date!
 
 [Personal Portfolio](https://markmulligan.dev) - Displays my experience and recent projects
 
