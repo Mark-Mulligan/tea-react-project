@@ -4,6 +4,9 @@ import React, { FC, useContext, useState } from 'react';
 // Next
 import Link from 'next/link';
 
+// axios
+import axios from 'axios';
+
 // MUI
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
@@ -20,28 +23,48 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import CardActionArea from '@mui/material/CardActionArea';
 import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
 
 // Context
 import { AppContext } from '@/context/AppContext';
 
 // Types
-import { EpisodeOverview } from '@/customTypes/omdbApi';
+import { EpisodeOverview, SeriesData } from '@/customTypes/omdbApi';
 
 interface IProps {
   title: string;
   seasonNumber: number;
+  seriesId: string;
   episodeData?: EpisodeOverview[]; // only used on first Accordian in list
 }
 
-const SeasonAccordian: FC<IProps> = ({ title, seasonNumber, episodeData }) => {
+const SeasonAccordian: FC<IProps> = ({ title, seasonNumber, seriesId, episodeData }) => {
   const { darkMode } = useContext(AppContext);
 
   const [expanded, setExpanded] = useState<boolean>(false);
+  const [episodes, setEpisodes] = useState<EpisodeOverview[]>([]);
+  const [hasFetchedData, setHasFetchedData] = useState(episodeData ? true : false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleChange = () => (event: React.SyntheticEvent, isExpanded: boolean) => {
-    console.log(event);
-    console.log('isExapnded', isExpanded);
+  const handleChange = () => async (event: React.SyntheticEvent, isExpanded: boolean) => {
     setExpanded(!expanded);
+
+    if (!hasFetchedData) {
+      console.log('isFetchingData');
+      setIsLoading(true);
+
+      try {
+        const { data } = await axios.get<SeriesData>(`/api/episodes?i=${seriesId}&Season=${seasonNumber}`);
+        if (data.Episodes) {
+          setHasFetchedData(true);
+          setEpisodes(data.Episodes);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -54,6 +77,11 @@ const SeasonAccordian: FC<IProps> = ({ title, seasonNumber, episodeData }) => {
         <Typography>{title}</Typography>
       </AccordionSummary>
       <AccordionDetails sx={{ paddingRight: '1rem' }}>
+        {isLoading && (
+          <Box sx={{ width: '100%', textAlign: 'center' }}>
+            <CircularProgress size={80} />
+          </Box>
+        )}
         <Box sx={{ display: 'flex', overflow: 'auto', paddingBottom: '1.5rem' }}>
           {episodeData &&
             episodeData.map((episode) => {
@@ -86,6 +114,36 @@ const SeasonAccordian: FC<IProps> = ({ title, seasonNumber, episodeData }) => {
                 </Link>
               );
             })}
+          {episodes.map((episode) => {
+            return (
+              <Link
+                key={episode.imdbID}
+                href={`/movie/${episode.imdbID}`}
+                passHref
+                id={episode.imdbID}
+                style={{ marginRight: '1rem' }}
+              >
+                <CardActionArea sx={{ height: '100%', minWidth: '220px' }}>
+                  <Card sx={{ height: '100%', background: darkMode ? 'rgba(8, 12, 33)' : 'rgb(190, 190, 190)' }}>
+                    <CardContent sx={{ marginBottom: '3rem' }}>
+                      <Typography gutterBottom variant="h6" component="div">
+                        {episode.Title}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        Episode: {episode.Episode}
+                      </Typography>
+
+                      <Typography variant="body2" color="text.secondary" sx={{ marginBottom: '2rem' }}>
+                        Released: {episode.Released}
+                      </Typography>
+
+                      <Chip label="View Details" variant="outlined" clickable />
+                    </CardContent>
+                  </Card>
+                </CardActionArea>
+              </Link>
+            );
+          })}
         </Box>
       </AccordionDetails>
     </Accordion>

@@ -46,12 +46,6 @@ const MoviePage: NextPage<IProps> = ({ movieDetails, seriesData }) => {
     return <div>Not found</div>;
   }
 
-  console.log('series', seriesData);
-
-  if (seriesData) {
-    console.log(Array(Number(seriesData.totalSeasons)).fill(0));
-  }
-
   return (
     <>
       <Head>
@@ -172,6 +166,7 @@ const MoviePage: NextPage<IProps> = ({ movieDetails, seriesData }) => {
                         title={`Season ${index + 1}`}
                         seasonNumber={index + 1}
                         episodeData={seriesData.Episodes}
+                        seriesId={movieDetails.imdbID}
                       />
                     );
                   }
@@ -181,6 +176,7 @@ const MoviePage: NextPage<IProps> = ({ movieDetails, seriesData }) => {
                       key={`seasion-accordian-${index}`}
                       title={`Season ${index + 1}`}
                       seasonNumber={index + 1}
+                      seriesId={movieDetails.imdbID}
                     />
                   );
                 })}
