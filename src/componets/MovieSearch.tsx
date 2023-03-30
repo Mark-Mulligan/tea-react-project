@@ -53,7 +53,9 @@ const MovieSearch: FC<IProps> = ({ setSearchResultCount, setSearchResults }) => 
       const queryObject: { s?: string; type?: string; y?: string; page: string } = { page: '1' };
 
       if (searchText) {
-        queryObject.s = searchText;
+        // Fixes issue where searches fail with a space at the end.
+        queryObject.s = searchText.trim();
+        setSearchText(searchText.trim());
       }
 
       if (mediaType && mediaType !== 'any') {
@@ -111,6 +113,7 @@ const MovieSearch: FC<IProps> = ({ setSearchResultCount, setSearchResults }) => 
               <MenuItem value="any">Any</MenuItem>
               <MenuItem value="movie">Movie</MenuItem>
               <MenuItem value="series">Series</MenuItem>
+              <MenuItem value="game">Game</MenuItem>
             </Select>
           </FormControl>
         </Grid>
